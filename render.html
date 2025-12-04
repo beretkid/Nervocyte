@@ -70,6 +70,9 @@ loader.load(
         scene.add(cube);
 		  
         console.log('Model loaded successfully!');
+		renderer.setAnimationLoop( animate );
+cube.position.y = 5
+camera.position.z = 0;
 		init()
     },
 
@@ -87,9 +90,7 @@ loader.load(
 //const geometry = new THREE.BoxGeometry( 2, 1, 1 );
 //const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 function init() {
-renderer.setAnimationLoop( animate );
-cube.position.y = 5
-camera.position.z = 0;
+
 }
 
 
