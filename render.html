@@ -70,6 +70,7 @@ loader.load(
         scene.add(cube);
 		  
         console.log('Model loaded successfully!');
+		init()
     },
 
     // Optional: onProgress callback (for loading bars)
@@ -85,7 +86,7 @@ loader.load(
 
 //const geometry = new THREE.BoxGeometry( 2, 1, 1 );
 //const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-
+function init() {
 
 cube.position.y = 5
 camera.position.z = 0;
@@ -232,7 +233,7 @@ var prevy = 0
 
 ctx.fillStyle = "red"
 ctx.fillRect(0,0,50,50)
-
+}
 
 
 
