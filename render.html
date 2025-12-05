@@ -26,7 +26,7 @@ var pct = 0
   var camup = 1.5
 const canvas = document.getElementById('visuals');
   const ctx = canvas.getContext("2d");
-var entities = [{x:1,y:5,z:3}]
+
 const hphs = document.getElementById("hphs")
 
 var pressedKeys = []
@@ -51,7 +51,7 @@ renderer.domElement.id = "wawa"
 document.body.appendChild( renderer.domElement );
 var light = new THREE.AmbientLight( 0x404040 ); // soft white light
 scene.add( light );
-
+const entities = []
 
 const loader = new STLLoader();
 
@@ -87,8 +87,8 @@ camera.position.z = 0;
 
 
 
-//const geometry = new THREE.BoxGeometry( 2, 1, 1 );
-//const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const geometry = new THREE.BoxGeometry( 2, 1, 0 );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
 
 
