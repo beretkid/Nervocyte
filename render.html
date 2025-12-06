@@ -128,7 +128,7 @@ ctx.clearRect(0,0,1000,1000)
    camera.rotation.x = 0
 	camera.rotation.y = camturn
 	camera.rotation.z = 0
-		camera.rotateZ(camup)
+		//camera.rotateZ(camup)
    camera.rotateX(camright)
 
 	
@@ -156,8 +156,8 @@ console.log(ref.position)
   }
 	if (pressedKeys["ArrowLeft"]) {camright = camright - 0.1}
 	if (pressedKeys["ArrowRight"]) {camright = camright + 0.1}
-	if (pressedKeys["ArrowUp"]) {camright = camup + 0.1}
-	if (pressedKeys["ArrowDown"]) {camright = camup - 0.1}
+	if (pressedKeys["ArrowUp"]) {camup = camup + 0.1}
+	if (pressedKeys["ArrowDown"]) {camup = camup - 0.1}
 
 
 
