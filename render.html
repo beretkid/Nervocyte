@@ -127,9 +127,9 @@ ctx.clearRect(0,0,1000,1000)
 	curr = entities[i]
 		ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
 	}
-   camera.rotation.x = degToRad(90)
-	camera.rotation.y = degToRad(camright)
-	camera.rotation.z = 0
+    camera.rotation.y = camright; // Yaw (left/right)
+    camera.rotation.x = THREE.MathUtils.clamp(camup, -Math.PI / 2, Math.PI / 2); // Pitch (up/down)
+    camera.rotation.z = 0; // Roll (keep level)
 		//camera.rotateZ(camup)
    camera.rotateY(camright)
 	camera.rotateZ(90)
@@ -157,8 +157,8 @@ ctx.clearRect(0,0,1000,1000)
 console.log(ref.position)
     
   }
-	if (pressedKeys["ArrowLeft"]) {camright = camright - 2}
-	if (pressedKeys["ArrowRight"]) {camright = camright + 2}
+	if (pressedKeys["ArrowLeft"]) {camright = camright - 0.1}
+	if (pressedKeys["ArrowRight"]) {camright = camright + 0.1}
 	if (pressedKeys["ArrowUp"]) {camup = camup + 2}
 	if (pressedKeys["ArrowDown"]) {camup = camup - 2}
 
