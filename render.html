@@ -26,6 +26,7 @@
   const ctx = canvas.getContext("2d");
   const hphs = document.getElementById("hphs")
   var pressedKeys = []
+     const textureLoader = new THREE.TextureLoader();
 
   window.addEventListener('message', (event) => {
     pressedKeys = event.data.pressedKeys
@@ -58,7 +59,11 @@
   /* function degToRad(degrees) {
     return degrees * (Math.PI / 180);
   } */
+  //load textures
     const texture = textureLoader.load('Assets/TerrainTexture.png');
+    const groudtex = new THREE.MeshStandardMaterial({
+        map: texture
+    });
   const floor = new THREE.Mesh(geometry2, material2);
   scene.add(floor);
   floor.position.set(0, 0, 0); // Cleaner way to set position
@@ -69,7 +74,7 @@
     'Assets/CitidelWall.stl', 
     function (geometry) {
         const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-        const cube = new THREE.Mesh(geometry, material);
+        const cube = new THREE.Mesh(geometry, groudtex);
         scene.add(cube);
         console.log('Model loaded successfully!');
         renderer.setAnimationLoop( animate );
@@ -98,6 +103,7 @@
       ctx.fillStyle = "White"
       curr = entities[i]
       ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
+      
     }
     
     //upVector = new THREE.Vector3(0, camright, 0);
