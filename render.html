@@ -61,7 +61,7 @@
   } */
   //load textures
     const texture = textureLoader.load('Assets/TerrainTexture.png');
-    const groudtex = new THREE.MeshStandardMaterial({
+    const groundtex = new THREE.MeshStandardMaterial({
         map: texture
     });
   const floor = new THREE.Mesh(geometry2, material2);
@@ -74,12 +74,12 @@
     'Assets/CitidelWall.stl', 
     function (geometry) {
         const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-        const cube = new THREE.Mesh(geometry, groudtex);
+        const cube = new THREE.Mesh(geometry, groundtex);
         scene.add(cube);
         console.log('Model loaded successfully!');
         renderer.setAnimationLoop( animate );
         cube.position.y = 5
-        camera.position.z = 1;
+        camera.position.z = 4;
        camera.rotation.x = Math.PI / 2; // 1.5708 radians
     },
     undefined, 
