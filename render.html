@@ -127,12 +127,18 @@ ctx.clearRect(0,0,1000,1000)
 	curr = entities[i]
 		ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
 	}
+	    const rotationSpeed = Math.PI / 180 * 2; // 2 degrees per frame turn
     camera.rotation.y = camright; // Yaw (left/right)
     camera.rotation.x = THREE.MathUtils.clamp(camup, -Math.PI / 2, Math.PI / 2); // Pitch (up/down)
     camera.rotation.z = 0; // Roll (keep level)
 		//camera.rotateZ(camup)
-   camera.rotateY(camright)
-	camera.rotateZ(90)
+
+
+
+	if (pressedKeys["ArrowLeft"]) { camright -= rotationSpeed; }
+	if (pressedKeys["ArrowRight"]) { camright += rotationSpeed; }
+	if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
+	if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
     
 	
 	
