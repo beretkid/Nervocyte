@@ -44,7 +44,7 @@ var w = canvas.width;
 var h = canvas.height;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-
+camera.rotation.order = 'YXZ';
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -55,7 +55,9 @@ scene.add( light );
 const entities = []
 const geometry2 = new THREE.BoxGeometry( 10, 10, 10 );
 const material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-
+function degToRad(degrees) {
+  return degrees * (Math.PI / 180);
+}
 	const floor = new THREE.Mesh(geometry2, material2);
     scene.add(floor);
 	floor.position.x = 0
@@ -125,12 +127,12 @@ ctx.clearRect(0,0,1000,1000)
 	curr = entities[i]
 		ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
 	}
-   camera.rotation.x = camup
-	camera.rotation.y = camturn
+   camera.rotation.x = degToRad(90)
+	camera.rotation.y = degToRad(camright)
 	camera.rotation.z = 0
 		//camera.rotateZ(camup)
    camera.rotateY(camright)
-	camera.rotateZ(camup)
+	camera.rotateZ(90)
     
 	
 	
@@ -155,10 +157,10 @@ ctx.clearRect(0,0,1000,1000)
 console.log(ref.position)
     
   }
-	if (pressedKeys["ArrowLeft"]) {camright = camright - 0.1}
-	if (pressedKeys["ArrowRight"]) {camright = camright + 0.1}
-	if (pressedKeys["ArrowUp"]) {camup = camup + 0.1}
-	if (pressedKeys["ArrowDown"]) {camup = camup - 0.1}
+	if (pressedKeys["ArrowLeft"]) {camright = camright - 2}
+	if (pressedKeys["ArrowRight"]) {camright = camright + 2}
+	if (pressedKeys["ArrowUp"]) {camup = camup + 2}
+	if (pressedKeys["ArrowDown"]) {camup = camup - 2}
 
 
 
