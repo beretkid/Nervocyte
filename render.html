@@ -129,7 +129,7 @@ ctx.clearRect(0,0,1000,1000)
 	}
 	    const rotationSpeed = Math.PI / 180 * 2; // 2 degrees per frame turn
     camera.rotation.y = camright; // Yaw (left/right)
-    camera.rotation.x = THREE.MathUtils.clamp(camup, -Math.PI / 2, Math.PI / 2); // Pitch (up/down)
+    camera.rotation.x = 0.5
     camera.rotation.z = 0; // Roll (keep level)
 		//camera.rotateZ(camup)
 
@@ -165,8 +165,8 @@ console.log(ref.position)
   }
 	if (pressedKeys["ArrowLeft"]) {camright = camright - 0.1}
 	if (pressedKeys["ArrowRight"]) {camright = camright + 0.1}
-	if (pressedKeys["ArrowUp"]) {camup = camup + 2}
-	if (pressedKeys["ArrowDown"]) {camup = camup - 2}
+	if (pressedKeys["ArrowUp"]) {camup = camup + 0.1}
+	if (pressedKeys["ArrowDown"]) {camup = camup - 0.1}
 
 
 
@@ -179,7 +179,7 @@ console.log(ref.position)
     const ref = new THREE.Object3D
    
     ref.rotation.x = 0
-    ref.rotateY(camturn)
+
     ref.rotation.z = 0
     ref.position.x = camera.position.x
     ref.position.y = camera.position.y
@@ -199,7 +199,7 @@ console.log(ref.position)
    
    ref.rotation.x = 0
 	
-    ref.rotateY(camturn)
+
     ref.rotation.z = 0
     ref.position.x = camera.position.x
     ref.position.y = camera.position.y
@@ -218,7 +218,7 @@ console.log(ref.position)
    
    ref.rotation.x = 0
 	
-    ref.rotateY(camturn)
+
     ref.rotation.z = 0
     ref.position.x = camera.position.x
     ref.position.y = camera.position.y
