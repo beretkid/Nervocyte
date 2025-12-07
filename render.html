@@ -51,6 +51,8 @@
 
   var light = new THREE.AmbientLight( 0x404040 ); 
   scene.add( light );
+  const light2 = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+scene.add( light2 );
   const entities = []
   const geometry2 = new THREE.BoxGeometry( 1000, 1000, 1 );
   const material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
