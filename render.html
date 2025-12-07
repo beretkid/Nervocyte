@@ -105,10 +105,10 @@
     if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
     if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
 
-    camera.rotation.z = camup; // Yaw (Left/Right look)
+    camera.rotation.z = camright; // Yaw (Left/Right look)
     // Clamp the X rotation (pitch)
     camera.rotation.x = 1.5708
-    camera.rotation.z = camright; // Roll (Keep the horizon level)
+    camera.rotation.z = camup; // Roll (Keep the horizon level)
 
 
     
