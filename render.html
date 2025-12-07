@@ -129,8 +129,12 @@ scene.add( light2 );
       camera.rotateOnAxis(upVector, -rotationSpeed); 
        camright += -rotationSpeed
     }
-  
-    
+  var moveSpeed = 0.05;
+        if (pressedKeys["ShiftLeft"] ) { 
+          moveSpeed = 0.15;
+        } else {
+           moveSpeed = 0.05;
+        }
 
 
 
@@ -138,7 +142,7 @@ scene.add( light2 );
     
     renderer.render( scene, camera );
 
-    const moveSpeed = 0.05;
+    
 
     if (pressedKeys["KeyS"]) {
       // Moves backward along the camera's local Z-axis

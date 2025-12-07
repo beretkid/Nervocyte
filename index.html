@@ -9,7 +9,7 @@
 </div>
 <input type="text" id="input" value=""style="position:absolute;top:50%;left:50%;">
 
-<iframe hidden=true style="position:absolute;top:0%;left:0%;border:2px solid; z-index:10;border-color:#0f0f0f;width:100%;height:100%;pointer-events: none;" src="render.html" id="iframe"></iframe>
+<iframe style="position:absolute;top:0%;left:0%;border:2px solid; z-index:10;border-color:#0f0f0f;width:100%;height:100%;pointer-events: none;" src="render.html" id="iframe"></iframe>
 </body>
   
 
@@ -117,11 +117,11 @@ ctx.fillRect(amnt%w,countOccurrences(amnt,w),5,5)
             handleCommand(input.value)
 				
 				}
-			         if (event.key === 'KeyV') {
-            iframe.hidden = false
+			         if (pressedKeys["KeyV"]) {
+            iframe.hidden = true
 				
 				}
-			 			         if (event.key === 'KeyB') {
+			 			         if (pressedKeys["KeyB"]) {
             iframe.hidden = false
 				
 				}
