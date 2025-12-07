@@ -39,7 +39,7 @@
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // CRITICAL FIX: Set Euler order to YXZ for proper FPS controls once at setup
-  camera.rotation.order = 'YXZ'; 
+
     var upVector = new THREE.Vector3(0, 1, 0); // Fuck whoops that was a const
   // Define the X-axis vector globally once (for movement calculations if needed later)
   var sideVector = new THREE.Vector3(1, 0, 0);
