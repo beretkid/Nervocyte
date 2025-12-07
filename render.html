@@ -75,6 +75,7 @@
         renderer.setAnimationLoop( animate );
         cube.position.y = 5
         camera.position.z = 5;
+       camera.rotation.x = Math.PI / 2; // 1.5708 radians
     },
     undefined, 
     function (error) {
@@ -99,8 +100,8 @@
       ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
     }
     
-    upVector = new THREE.Vector3(0, camright, 0);
-      camera.rotation.x = Math.PI / 2; // 1.5708 radians
+    //upVector = new THREE.Vector3(0, camright, 0);
+     
     if (pressedKeys["ArrowLeft"]) { 
       // Rotate around the world's UP axis (Y axis) relative to current orientation
       
