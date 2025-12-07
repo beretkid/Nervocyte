@@ -105,21 +105,12 @@
     if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
     if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
 
-    // 2. Apply the calculated radians to the camera.rotation properties
-    // The YXZ order ensures yaw and pitch work correctly without gimbal lock
-    camera.rotation.y = camright; // Yaw (Left/Right look)
+    camera.rotation.z = camup; // Yaw (Left/Right look)
     // Clamp the X rotation (pitch)
-    camera.rotation.x = THREE.MathUtils.clamp(camup, -Math.PI / 2 + 0.01, Math.PI / 2 - 0.01); 
-    camera.rotation.z = 0; // Roll (Keep the horizon level)
+    camera.rotation.x = 1.5708
+    camera.rotation.z = camright; // Roll (Keep the horizon level)
 
-    // Remove the previous conflicting code that was here:
-    /* 
-    camera.rotation.x = degToRad(90)
-    camera.rotation.y = degToRad(camright)
-    camera.rotation.z = 0
-    camera.rotateY(camright) 
-    camera.rotateZ(90)
-    */
+
     
     renderer.render( scene, camera );
 
