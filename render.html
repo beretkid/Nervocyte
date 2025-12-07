@@ -99,15 +99,19 @@
       ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
     }
     
-
+    upVector = new THREE.Vector3(0, camright, 0);
       camera.rotation.x = Math.PI / 2; // 1.5708 radians
     if (pressedKeys["ArrowLeft"]) { 
       // Rotate around the world's UP axis (Y axis) relative to current orientation
+      
       camera.rotateOnAxis(upVector, rotationSpeed); 
+      camright += rotationSpeed
     }
     if (pressedKeys["ArrowRight"]) { 
        // Rotate the other way
+     
       camera.rotateOnAxis(upVector, -rotationSpeed); 
+       camright += -rotationSpeed
     }
   
     
