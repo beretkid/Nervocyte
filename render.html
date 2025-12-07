@@ -1,287 +1,171 @@
 <script type="importmap">
   {
     "imports": {
-      "three": "https://unpkg.com/three/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three/examples/jsm/"
-	
+      "three": "unpkg.com",
+      "three/addons/": "unpkg.com"
     }
-	     
   }
-  
 </script>
 
-
-
-
-
-
-<script type="module"id="renderer">
+<script type="module" id="renderer">
   import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   import * as THREE from 'three';
-        // Import STLLoader using the "three/addons/" mapping
-        import { STLLoader } from 'three/addons/loaders/STLLoader.js'; 
-var i = 0
-var pct = 0
+  import { STLLoader } from 'three/addons/loaders/STLLoader.js'; 
+
+  // --- Initializing Variables (Standardized to Radians/Defaults) ---
+  var i = 0
+  var pct = 0
   var camturn = 0
-  var camup = 0.5
-	var camright = 1.5
-const canvas = document.getElementById('visuals');
+  // Initialize camera orientation variables in RADIANS
+  var camup = 0;   
+  var camright = 0; 
+  // Define a consistent rotation speed in RADIANS (approx 2 degrees per update)
+  const rotationSpeed = Math.PI / 180 * 2; 
+
+  const canvas = document.getElementById('visuals');
   const ctx = canvas.getContext("2d");
+  const hphs = document.getElementById("hphs")
+  var pressedKeys = []
 
-const hphs = document.getElementById("hphs")
+  window.addEventListener('message', (event) => {
+    pressedKeys = event.data.pressedKeys
+  })
 
-var pressedKeys = []
-window.addEventListener('message', (event) => {
-    // Check the origin for security
-	 pressedKeys=event.data.pressedKeys
-	 
-	 //console.log(event)
-})
+  canvas.width = window.innerWidth * 1
+  canvas.height = window.innerHeight * 1
+  var w = canvas.width;
+  var h = canvas.height;
 
-canvas.width = window.innerWidth * 1
-canvas.height = window.innerHeight * 1
-var w = canvas.width;
-var h = canvas.height;
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-camera.rotation.order = 'YXZ';
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+  // CRITICAL FIX: Set Euler order to YXZ for proper FPS controls once at setup
+  camera.rotation.order = 'YXZ'; 
+  const renderer = new THREE.WebGLRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  renderer.domElement.id = "wawa"
+  document.body.appendChild( renderer.domElement );
 
-renderer.domElement.id = "wawa"
-document.body.appendChild( renderer.domElement );
-var light = new THREE.AmbientLight( 0x404040 ); // soft white light
-scene.add( light );
-const entities = []
-const geometry2 = new THREE.BoxGeometry( 10, 10, 10 );
-const material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
-function degToRad(degrees) {
-  return degrees * (Math.PI / 180);
-}
-	const floor = new THREE.Mesh(geometry2, material2);
-    scene.add(floor);
-	floor.position.x = 0
-	floor.position.y = 0
-	floor.position.z = 0
-const loader = new STLLoader();
+  var light = new THREE.AmbientLight( 0x404040 ); 
+  scene.add( light );
+  const entities = []
+  const geometry2 = new THREE.BoxGeometry( 10, 10, 10 );
+  const material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
 
-// 2. Use the loader's .load() method
-loader.load(
-    // The path/URL to your .stl file
+  // The degToRad function is no longer needed if we use radians everywhere
+  /* function degToRad(degrees) {
+    return degrees * (Math.PI / 180);
+  } */
+
+  const floor = new THREE.Mesh(geometry2, material2);
+  scene.add(floor);
+  floor.position.set(0, 0, 0); // Cleaner way to set position
+
+  const loader = new STLLoader();
+
+  loader.load(
     'Assets/CitidelWall.stl', 
-
-    // The onLoad callback function (fires when the file is ready)
     function (geometry) {
-        // 3. Define the appearance (material)
         const material = new THREE.MeshStandardMaterial({ color: 0x00ff00 });
-
-        // 4. Create the 3D object (mesh) and add it to the scene
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
-		
-		  
         console.log('Model loaded successfully!');
-		renderer.setAnimationLoop( animate );
-cube.position.y = 5
-		
-camera.position.z = 5;
-		
+        renderer.setAnimationLoop( animate );
+        cube.position.y = 5
+        camera.position.z = 5;
     },
-
-    // Optional: onProgress callback (for loading bars)
     undefined, 
-
-    // Optional: onError callback (for error handling)
     function (error) {
         console.error('An error occurred while loading the model:', error);
     }
-);
-
-
-        
+  );
     
+  var wdown = false
+  var adown = false
+  var sdown = false
+  var ddown = false
 
+  function animate() {
+    var curr
+    var cpx = camera.position.x
+    var cpy = camera.position.z
 
-
-
-
-var wdown = false
-var adown = false
-var sdown = false
-var ddown = false
-
-
-
-
-
-function animate() {
-
-
-var curr
-var cpx = camera.position.x
-var cpy = camera.position.z
-
-ctx.clearRect(0,0,1000,1000)
-   for (i in entities) {
-	ctx.fillStyle = "White"
-	curr = entities[i]
-		ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
-	}
-	    const rotationSpeed = Math.PI / 180 * 2; // 2 degrees per frame turn
-    camera.rotation.y = camright; // Yaw (left/right)
-    camera.rotation.x = 0
-    camera.rotation.z = 0; // Roll (keep level)
-		//camera.rotateZ(camup)
-
-
-
-	if (pressedKeys["ArrowLeft"]) { camright -= rotationSpeed; }
-	if (pressedKeys["ArrowRight"]) { camright += rotationSpeed; }
-	if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
-	if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
+    ctx.clearRect(0,0,1000,1000)
+    for (i in entities) {
+      ctx.fillStyle = "White"
+      curr = entities[i]
+      ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
+    }
     
-	
-	
-	
-	renderer.render( scene, camera );
-  if (pressedKeys["KeyS"]) {
-    //.translateOnAxis (camera.rotation,0.05)
-    const ref = new THREE.Object3D
-   
-    ref.rotation.x = 0
-    ref.rotateY(camturn)
-    ref.rotation.z = 0
-    ref.position.x = camera.position.x
-    ref.position.y = camera.position.y
-    ref.position.z = camera.position.z
-
-        var newpos = ref.translateY(-0.05)
-        
-        camera.position.x = newpos.position.x
-        camera.position.y = newpos.position.y
-        camera.position.z = newpos.position.z
-console.log(ref.position)
+    // --- CRITICAL FIX: Camera Rotation Logic ---
     
-  }
-	if (pressedKeys["ArrowLeft"]) {camright = camright - 0.1}
-	if (pressedKeys["ArrowRight"]) {camright = camright + 0.1}
-	if (pressedKeys["ArrowUp"]) {camup = camup + 0.1}
-	if (pressedKeys["ArrowDown"]) {camup = camup - 0.1}
+    // 1. Update rotation variables in RADIANS based on input (using our new rotationSpeed)
+    if (pressedKeys["ArrowLeft"]) { camright -= rotationSpeed; }
+    if (pressedKeys["ArrowRight"]) { camright += rotationSpeed; }
+    // We clamp 'camup' (X axis rotation/pitch) to prevent flipping the camera upside down
+    if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
+    if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
 
+    // 2. Apply the calculated radians to the camera.rotation properties
+    // The YXZ order ensures yaw and pitch work correctly without gimbal lock
+    camera.rotation.y = camright; // Yaw (Left/Right look)
+    // Clamp the X rotation (pitch)
+    camera.rotation.x = THREE.MathUtils.clamp(camup, -Math.PI / 2 + 0.01, Math.PI / 2 - 0.01); 
+    camera.rotation.z = 0; // Roll (Keep the horizon level)
 
-
-
-
-
-	
-  if (pressedKeys["KeyW"]) {
-    //.translateOnAxis (camera.rotation,0.05)
-    const ref = new THREE.Object3D
-   
-    ref.rotation.x = 0
-
-    ref.rotation.z = 0
-    ref.position.x = camera.position.x
-    ref.position.y = camera.position.y
-    ref.position.z = camera.position.z
-
-        var newpos = ref.translateY(0.05)
-        
-        camera.position.x = newpos.position.x
-        camera.position.y = newpos.position.y
-        camera.position.z = newpos.position.z
-console.log(ref.position)
+    // Remove the previous conflicting code that was here:
+    /* 
+    camera.rotation.x = degToRad(90)
+    camera.rotation.y = degToRad(camright)
+    camera.rotation.z = 0
+    camera.rotateY(camright) 
+    camera.rotateZ(90)
+    */
     
-  }
+    renderer.render( scene, camera );
+
+    // --- Movement Logic Optimization ---
+    // Instead of creating a new Object3D every frame, we can use built-in methods.
+    // Movement speed
+    const moveSpeed = 0.05;
+
+    if (pressedKeys["KeyS"]) {
+      // Moves backward along the camera's local Z-axis
+      camera.translateZ(moveSpeed); 
+    }
+    if (pressedKeys["KeyW"]) {
+      // Moves forward along the camera's local Z-axis
+      camera.translateZ(-moveSpeed); 
+    }
     if (pressedKeys["KeyA"]) {
-        //.translateOnAxis (camera.rotation,0.05)
-    const ref = new THREE.Object3D
-   
-   ref.rotation.x = 0
-	
+      // Moves left along the camera's local X-axis
+      camera.translateX(-moveSpeed);
+    }
+    if (pressedKeys["KeyD"]) {
+      // Moves right along the camera's local X-axis
+      camera.translateX(moveSpeed);
+    }
 
-    ref.rotation.z = 0
-    ref.position.x = camera.position.x
-    ref.position.y = camera.position.y
-    ref.position.z = camera.position.z
+    // Note: The above movement logic will move you up and down if you look up and down.
+    // If you want pure horizontal movement on the XZ plane regardless of vertical look angle,
+    // you need a slightly more complex direction vector calculation, but the translate methods 
+    // are much cleaner than your previous Object3D creation loop.
 
-        var newpos = ref.translateX(-0.05)
-        
-        camera.position.x = newpos.position.x
-        camera.position.y = newpos.position.y
-        camera.position.z = newpos.position.z
-console.log(ref.position)
-  }
-  if (pressedKeys["KeyD"]) {
-        //.translateOnAxis (camera.rotation,0.05)
-    const ref = new THREE.Object3D
-   
-   ref.rotation.x = 0
-	
-
-    ref.rotation.z = 0
-    ref.position.x = camera.position.x
-    ref.position.y = camera.position.y
-    ref.position.z = camera.position.z
-
-        var newpos = ref.translateX(0.05)
-        
-        camera.position.x = newpos.position.x
-        camera.position.y = newpos.position.y
-        camera.position.z = newpos.position.z
-console.log(ref.position)
   }
 
+  var changex = 0
+  var changey = 0
+  var prevx = 0
+  var prevy = 0 
 
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var changex = 0
-var changey = 0
-var prevx = 0
-var prevy = 0 
-
-
-
-
-
-ctx.fillStyle = "red"
-ctx.fillRect(0,0,50,50)
-
-
-
-
-//no school this friday btw!
-//neat! (That was a year ago he is fucking lying)
-
-
-
-
-
+  ctx.fillStyle = "red"
+  ctx.fillRect(0,0,50,50)
 
 </script>
 
-<canvas id="visuals"width="100"height="100"style="z-index: 01;position:absolute;top:0%;left:0%;border:2px solid;border-color:#0f0f0f"></canvas>
+<canvas id="visuals" width="100" height="100" style="z-index: 01;position:absolute;top:0%;left:0%;border:2px solid;border-color:#0f0f0f"></canvas>
 
 <style>
 #wawa {
-
-
   position: absolute;
   top: 0%;
   left: 0%;
