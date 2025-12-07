@@ -6,7 +6,7 @@
     }
   }
 </script>
-
+<body></body>
 <script type="module" id="renderer">
   import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
   import * as THREE from 'three';
@@ -64,7 +64,14 @@
     const groundtex = new THREE.MeshStandardMaterial({
         map: texture
     });
-  const floor = new THREE.Mesh(geometry2, material2);
+
+
+
+    //add skybox
+    textureLoader.load( 'textures/equirectangular/sky.hdr', (texture) => {
+    scene.background = texture
+    })
+  const floor = new THREE.Mesh(geometry2, groundtex);
   scene.add(floor);
   floor.position.set(0, 0, 0); // Cleaner way to set position
 
