@@ -125,11 +125,12 @@ ctx.clearRect(0,0,1000,1000)
 	curr = entities[i]
 		ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
 	}
-   camera.rotation.x = 0
+   camera.rotation.x = 90
 	camera.rotation.y = camturn
 	camera.rotation.z = 0
 		//camera.rotateZ(camup)
    camera.rotateY(camright)
+	camera.rotateZ(90)
 
 	
 	
