@@ -96,7 +96,7 @@
       ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
     }
     
-    // --- CRITICAL FIX: Camera Rotation Logic ---
+
     
     // 1. Update rotation variables in RADIANS based on input (using our new rotationSpeed)
     if (pressedKeys["ArrowLeft"]) { camright -= rotationSpeed; }
@@ -105,18 +105,18 @@
     if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
     if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
 
-    camera.rotation.z = camright; // Yaw (Left/Right look)
-    // Clamp the X rotation (pitch)
-    camera.rotation.x = 1.5708
-    camera.rotation.z = camright; // Roll (Keep the horizon level)
+    camera.rotation.x = Math.PI / 2; // 1.5708 radians
+    
+
+    camera.rotation.y = camright; 
+    
+
+    camera.rotation.z = 0; 
 
 
     
     renderer.render( scene, camera );
 
-    // --- Movement Logic Optimization ---
-    // Instead of creating a new Object3D every frame, we can use built-in methods.
-    // Movement speed
     const moveSpeed = 0.05;
 
     if (pressedKeys["KeyS"]) {
