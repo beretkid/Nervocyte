@@ -97,21 +97,19 @@
     }
     
 
-    
-    // 1. Update rotation variables in RADIANS based on input (using our new rotationSpeed)
-    if (pressedKeys["ArrowLeft"]) { camright -= rotationSpeed; }
-    if (pressedKeys["ArrowRight"]) { camright += rotationSpeed; }
-    // We clamp 'camup' (X axis rotation/pitch) to prevent flipping the camera upside down
-    if (pressedKeys["ArrowUp"]) { camup += rotationSpeed; }
-    if (pressedKeys["ArrowDown"]) { camup -= rotationSpeed; }
-
-    camera.rotation.x = Math.PI / 2; // 1.5708 radians
-    
-
-    camera.rotation.y = camright; 
+      camera.rotation.x = Math.PI / 2; // 1.5708 radians
+    if (pressedKeys["ArrowLeft"]) { 
+      // Rotate around the world's UP axis (Y axis) relative to current orientation
+      camera.rotateOnAxis(upVector, rotationSpeed); 
+    }
+    if (pressedKeys["ArrowRight"]) { 
+       // Rotate the other way
+      camera.rotateOnAxis(upVector, -rotationSpeed); 
+    }
+  
     
 
-    camera.rotation.z = 0; 
+
 
 
     
@@ -136,10 +134,7 @@
       camera.translateX(moveSpeed);
     }
 
-    // Note: The above movement logic will move you up and down if you look up and down.
-    // If you want pure horizontal movement on the XZ plane regardless of vertical look angle,
-    // you need a slightly more complex direction vector calculation, but the translate methods 
-    // are much cleaner than your previous Object3D creation loop.
+
 
   }
 
