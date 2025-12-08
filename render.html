@@ -93,11 +93,20 @@ scene.add( light2 );
     });
 
 
+const loader = new THREE.CubeTextureLoader();
 
+// 2. Load the six image files in the correct order
+loader.setPath( 'textures/cube/your_environment/' ); // Folder containing your images
+const textureCube = loader.load( [
+    'px.jpg', 'nx.jpg', // Right, Left
+    'py.jpg', 'ny.jpg', // Top, Bottom
+    'pz.jpg', 'nz.jpg'  // Front, Back
+] );
+  scene.background = textureCube;
     //add skybox
-    textureLoader.load( 'Assets/skybox.png', (texture) => {
-    scene.background = texture
-    })
+  //  textureLoader.load( 'Assets/skybox.png', (texture) => {
+    //scene.background = texture
+    //})
   const floor = new THREE.Mesh(geometry2, groundtex);
   scene.add(floor);
   floor.position.set(0, 0, 0); // Cleaner way to set position
