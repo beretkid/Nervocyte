@@ -114,13 +114,14 @@ const cloader = new THREE.CubeTextureLoader();
  // scene.background = textureCube;
     //add skybox
     //textureLoader.load( 'Assets/skybox.png', (texture) => {
-    scene.background = new THREE.MeshBasicMaterial({
+	what = new THREE.MeshBasicMaterial({
   color: 0xff0000, // Red color
   transparent: true, // Essential for transparency
-  opacity: 0.5, // 50% opaque, 50% transparent
+  opacity: 0, // 50% opaque, 50% transparent
   // opacity: 0.0, // Fully transparent
   // opacity: 1.0, // Fully opaque
 });
+    scene.background = what
     //})
   const floor = new THREE.Mesh(geometry2, groundtex);
   scene.add(floor);
