@@ -4,8 +4,15 @@
 		<link rel="icon" type="image/png" href="favicon.png">
 		<title>Nervocyte</title>
 	</head>
+	<style>
+
+		@keyframes moveIt {
+  from {background-position: bottom left;}
+  to {background-position: top right;}
+}
+	</style>
 	<body style="background-image: url('Assets/flesh3.png'); 
-    background-repeat: repeat; ">
+    background-repeat: repeat; animation: moveIt 10s linear infinite;">
 <div id="LogBar"style="position:absolute;top:0%;left:0%;border:2px solid;border-color:#362213;width:50%;height:75%">
 </div>
 <image hidden=true id="NeuronMinigame" style="top:75%;left:0%;width:50%;height:50% "src="Assets/NeuronMinigameN.png" >
