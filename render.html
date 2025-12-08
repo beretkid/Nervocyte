@@ -103,8 +103,12 @@ scene.add( light2 );
   } */
   //load textures
     const texture = textureLoader.load('Assets/TerrainTexture.png');
+	texture.wrapS = THREE.RepeatWrapping;
+texture.wrapT = THREE.RepeatWrapping;
+	texture.repeat.set(100, 100); // Repeat 4 times horizontally and vertically
     const groundtex = new THREE.MeshStandardMaterial({
         map: texture
+		
     });
 
 
@@ -118,7 +122,7 @@ const textureCube = cloader.load("Assets/skybox.png" );
 	
     //scene.background 
     //})
-	groundtex.repeat.set(4, 4);
+	
   const floor = new THREE.Mesh(geometry2, groundtex);
   scene.add(floor);
   floor.position.set(0, 0, 0); // Cleaner way to set position
