@@ -22,7 +22,7 @@
   var camup = 0;   
   var camright = 0; 
   // Define a consistent rotation speed in RADIANS (approx 2 degrees per update)
-  const rotationSpeed = Math.PI / 180 * 2; 
+  const rotationSpeed = Math.PI / 180 * 2;
 
   const canvas = document.getElementById('visuals');
   const ctx = canvas.getContext("2d");
@@ -113,7 +113,7 @@ scene.add( light2 );
     //for (i in entities) {
       ctx.fillStyle = "White"
       
-      ctx.fillRect( camright * 180, 0,10,10)
+      ctx.fillRect( camright * canvas.width, 0,10,10)
       
     //}
     
