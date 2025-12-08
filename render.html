@@ -96,7 +96,7 @@ scene.add( light2 );
 const cloader = new THREE.CubeTextureLoader();
 
 // 2. Load the six image files in the correct order
-const textureCube = loader.load("Assets/skybox.png" );
+const textureCube = cloader.load("Assets/skybox.png" );
   scene.background = textureCube;
     //add skybox
   //  textureLoader.load( 'Assets/skybox.png', (texture) => {
