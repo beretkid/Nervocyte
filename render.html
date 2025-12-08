@@ -113,7 +113,7 @@ scene.add( light2 );
     for (i in entities) {
       ctx.fillStyle = "White"
       curr = entities[i]
-      ctx.fillRect(curr.x + cpx,curr.y + cpy * 100,10,10)
+      ctx.fillRect(curr.x + camright ,0,10,10)
       
     }
     
@@ -138,7 +138,7 @@ scene.add( light2 );
            moveSpeed = 0.1;
         }
 
-camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.5)*0.25)
+camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.25)*0.25)
 
 
     
@@ -184,7 +184,7 @@ camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.5)*0.25)
 
 </script>
 
-<canvas id="visuals" width="100" height="100" style="z-index: 01;position:absolute;top:0%;left:0%;border:2px solid;border-color:#0f0f0f"></canvas>
+<canvas id="visuals" width="100%" height="100"% style="z-index: 10;position:absolute;top:0%;left:0%;border:2px solid;border-color:#0f0f0f"></canvas>
 
 <style>
 #wawa {
