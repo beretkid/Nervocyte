@@ -83,7 +83,7 @@
     var upVector = new THREE.Vector3(0, 1, 0); // Fuck whoops that was a const
   // Define the X-axis vector globally once (for movement calculations if needed later)
   var sideVector = new THREE.Vector3(1, 0, 0);
-  const renderer = new THREE.WebGLRenderer();
+  const renderer = new THREE.WebGLRenderer({alpha:true});
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.domElement.id = "wawa"
   document.body.appendChild( renderer.domElement );
