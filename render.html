@@ -129,36 +129,43 @@ scene.add( light2 );
       camera.rotateOnAxis(upVector, -rotationSpeed); 
        camright += -rotationSpeed
     }
-  var moveSpeed = 0.05;
+  var moveSpeed = 0.1;
         if (pressedKeys["ShiftLeft"] ) { 
-          moveSpeed = 0.15;
+          moveSpeed = 0.2;
         } else {
-           moveSpeed = 0.05;
+           moveSpeed = 0.1;
         }
 
-
+camera.position.z = 4+Math.sin(viewbob)
 
 
     
     renderer.render( scene, camera );
 
     
-
+    moving = false
     if (pressedKeys["KeyS"]) {
       // Moves backward along the camera's local Z-axis
       camera.translateZ(moveSpeed); 
+      moving = true
     }
     if (pressedKeys["KeyW"]) {
       // Moves forward along the camera's local Z-axis
       camera.translateZ(-moveSpeed); 
+      moving = true
     }
     if (pressedKeys["KeyA"]) {
       // Moves left along the camera's local X-axis
       camera.translateX(-moveSpeed);
+      moving = true
     }
     if (pressedKeys["KeyD"]) {
       // Moves right along the camera's local X-axis
       camera.translateX(moveSpeed);
+      moving = true
+    }
+    if (moving) {
+      viewbob += moveSpeed
     }
 
 
