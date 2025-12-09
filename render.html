@@ -92,7 +92,9 @@
 
   var light = new THREE.AmbientLight( 0x404040 ); 
   scene.add( light );
-  const light2 = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1 );
+  const color1 = new THREE.Color().setRGB( 0.5, 0.5, 0.5 );
+  const color2 = new THREE.Color().setRGB( 0.6, 0.6, 0.6 );
+  const light2 = new THREE.HemisphereLight( color1, color2, 1 );
 scene.add( light2 );
   const entities = []
   const geometry2 = new THREE.BoxGeometry( 1000, 1000, 1 );
