@@ -12,6 +12,7 @@
 	background-Size: 228px 228px;
     padding: 0;
 	 z-index: -1;"></div>
+<div id="debug"></div>
 <script type="importmap">
   {
     "imports": {
@@ -54,6 +55,7 @@
   var pct = 0
   var viewbob = 0
   var camturn = 0
+  const debugText = document.getElementById("debug")
   var moving = false
   // Initialize camera orientation variables in RADIANS
   var camup = 0;   
@@ -168,7 +170,7 @@ const textureCube = cloader.load([
   var adown = false
   var sdown = false
   var ddown = false
-
+ 
   function animate() {
     var curr
     var cpx = camera.position.x
@@ -206,7 +208,7 @@ const textureCube = cloader.load([
 camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.25)*0.1)
 
  	sky.style.backgroundPositionX = ((camright*360)+ambientShart)+'px';
-    
+    debugText.innerHTML = "X: " + cpx + " Y: " cpy
     renderer.render( scene, camera );
 
     ambientShart += 0.1
