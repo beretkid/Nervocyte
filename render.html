@@ -90,6 +90,8 @@
   const renderer = new THREE.WebGLRenderer({alpha:true});
   renderer.setSize( window.innerWidth, window.innerHeight );
   renderer.domElement.id = "wawa"
+	var cpx = 0
+	var cpy = 0
   document.body.appendChild( renderer.domElement );
 
   var light = new THREE.AmbientLight( 0x404040 ); 
@@ -208,7 +210,7 @@ const textureCube = cloader.load([
 camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.25)*0.1)
 
  	sky.style.backgroundPositionX = ((camright*360)+ambientShart)+'px';
-    debugText.innerHTML = "X: " + camera.position.x + " Y: " camera.position.y
+    debugText.innerHTML = "X: " + cpx+ " Y: " cpy
     renderer.render( scene, camera );
 
     ambientShart += 0.1
