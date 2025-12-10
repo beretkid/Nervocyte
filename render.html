@@ -109,14 +109,14 @@ scene.add( light2 );
     return degrees * (Math.PI / 180);
   } */
   //load textures
-//    const texture = textureLoader.load('Assets/TerrainTexture.png');
-//	texture.wrapS = THREE.RepeatWrapping;
-//texture.wrapT = THREE.RepeatWrapping;
-	//texture.repeat.set(100, 100); // Repeat 4 times horizontally and vertically
-    //const groundtex = new THREE.MeshStandardMaterial({
-     //   map: texture
+    const texture = textureLoader.load('Assets/TerrainTexture.png');
+	texture.wrapS = THREE.RepeatWrapping;
+texture.wrapT = THREE.RepeatWrapping;
+	texture.repeat.set(100, 100); // Repeat 4 times horizontally and vertically
+    const groundtex = new THREE.MeshStandardMaterial({
+        map: texture
 		
-    //});
+    });
 
 
 const cloader = new THREE.CubeTextureLoader();
@@ -137,14 +137,14 @@ const textureCube = cloader.load([
 
   scene.background = textureCube;
     //add skybox
-    //textureLoader.load( 'Assets/skybox.png', (texture) => {
+    textureLoader.load( 'Assets/skybox.png', (texture) => {
 	
-    //scene.background 
-    //})
+    scene.background 
+    })
 	
-  //const floor = new THREE.Mesh(geometry2, groundtex);
-  //scene.add(floor);
-  //floor.position.set(0, 0, 0); // Cleaner way to set position
+  const floor = new THREE.Mesh(geometry2, groundtex);
+  scene.add(floor);
+  floor.position.set(0, 0, 0); // Cleaner way to set position
   
   const loader = new STLLoader();
 var loadedScene = null
