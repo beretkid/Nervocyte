@@ -150,9 +150,9 @@ const textureCube = cloader.load([
 
   import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
-const loader = new GLTFLoader();
-loader.load(
-    'path/to/your_scene.gltf',
+const sloader = new GLTFLoader();
+sloader.load(
+    'Assets/Maps/RoomTemplate.json',
     function ( gltf ) {
         // Add the loaded content (which is a Group/Scene) to your main scene
         scene.add( gltf.scene );
