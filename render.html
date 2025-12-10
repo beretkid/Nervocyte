@@ -155,7 +155,7 @@ var loadedScene = null
 sloader.load(
     // Change this line to point to your .glb file:
     'Assets/Maps/scene.glb', 
-    function ( gltf ) {
+    function ( glb ) {
         // This function runs AFTER the model (and all its embedded assets) is downloaded.
         console.log("GLB model loaded and added to scene!"); 
         scene.add( gltf.scene );
@@ -215,7 +215,7 @@ camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.25)*0.1)
 
  	sky.style.backgroundPositionX = ((camright*360)+ambientShart)+'px';
     debugText.innerHTML = "X: " + cpx+ " Y: " + cpy
-    renderer.render( loadedScene, camera );
+    renderer.render( scene, camera );
 
     ambientShart += 0.1
     moving = false
