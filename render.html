@@ -149,25 +149,28 @@ const textureCube = cloader.load([
   
   const loader = new STLLoader();
 
-  loader.load(
-    'Assets/Maps/model.stl', 
-	  
-    function (geometry) {
-        const material = new THREE.MeshStandardMaterial({ color: 0x363636 });
-        const cube = new THREE.Mesh(geometry, material);
-        cube.scale.set(10, 10, 10)
-        scene.add(cube);
-        console.log('Model loaded successfully!');
-        renderer.setAnimationLoop( animate );
-        cube.position.y = 5
-        camera.position.z = 4;
-       camera.rotation.x = Math.PI / 2; // 1.5708 radians
+  const sloader = new GLTFLoader();
+var loadedScene = null
+
+sloader.load(
+    // Change this line to point to your .glb file:
+    'Assets/Maps/Room.glb', 
+    function ( gltf ) {
+        // This function runs AFTER the model (and all its embedded assets) is downloaded.
+        console.log("GLB model loaded and added to scene!"); 
+        scene.add( gltf.scene );
+        loadedScene = gltf.scene;
     },
-    undefined, 
-    function (error) {
-        console.error('An error occurred while loading the model:', error);
+    // Optional: called while loading is progressing
+    function ( xhr ) {
+        // This is where your percentage logging comes from
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    },
+    // Optional: called when loading has errors
+    function ( error ) {
+        console.error( 'An error happened during GLB load:', error ); // <-- Check your console for this error!
     }
-  );
+);
     
   var wdown = false
   var adown = false
@@ -212,7 +215,7 @@ camera.position.z = 4+(Math.sin(Math.sin(viewbob*1.2)*1.25)*0.1)
 
  	sky.style.backgroundPositionX = ((camright*360)+ambientShart)+'px';
     debugText.innerHTML = "X: " + cpx+ " Y: " + cpy
-    renderer.render( scene, camera );
+    renderer.render( loadedScene, camera );
 
     ambientShart += 0.1
     moving = false
