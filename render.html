@@ -109,14 +109,14 @@ scene.add( light2 );
     return degrees * (Math.PI / 180);
   } */
   //load textures
-    const texture = textureLoader.load('Assets/TerrainTexture.png');
-	texture.wrapS = THREE.RepeatWrapping;
-texture.wrapT = THREE.RepeatWrapping;
-	texture.repeat.set(100, 100); // Repeat 4 times horizontally and vertically
-    const groundtex = new THREE.MeshStandardMaterial({
-        map: texture
+//    const texture = textureLoader.load('Assets/TerrainTexture.png');
+//	texture.wrapS = THREE.RepeatWrapping;
+//texture.wrapT = THREE.RepeatWrapping;
+	//texture.repeat.set(100, 100); // Repeat 4 times horizontally and vertically
+    //const groundtex = new THREE.MeshStandardMaterial({
+     //   map: texture
 		
-    });
+    //});
 
 
 const cloader = new THREE.CubeTextureLoader();
@@ -147,25 +147,27 @@ const textureCube = cloader.load([
   floor.position.set(0, 0, 0); // Cleaner way to set position
   
   const loader = new STLLoader();
-const sceneLoader = new GLTFLoader();
-  sceneLoader.load(
-    'Assets/Maps/Room.gltf', 
-	  
-    function (geometry,material) {
-        const cube = new THREE.Mesh(geometry, material);
-        cube.scale.set(10, 10, 10)
-        scene.add(cube);
-        console.log('Model loaded successfully!');
-        renderer.setAnimationLoop( animate );
-        cube.position.y = 5
-        camera.position.z = 4;
-       camera.rotation.x = Math.PI / 2; // 1.5708 radians
+
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+const loader = new GLTFLoader();
+loader.load(
+    'path/to/your_scene.gltf',
+    function ( gltf ) {
+        // Add the loaded content (which is a Group/Scene) to your main scene
+        scene.add( gltf.scene );
+        // Store a reference if you plan to remove it later
+        myLoadedScene = gltf.scene;
     },
-    undefined, 
-    function (error) {
-        console.error('An error occurred while loading the model:', error);
+    // Optional: called while loading is progressing
+    function ( xhr ) {
+        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+    },
+    // Optional: called when loading has errors
+    function ( error ) {
+        console.error( 'An error happened', error );
     }
-  );
+);
     
   var wdown = false
   var adown = false
