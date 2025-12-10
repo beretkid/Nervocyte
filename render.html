@@ -147,12 +147,11 @@ const textureCube = cloader.load([
   floor.position.set(0, 0, 0); // Cleaner way to set position
   
   const loader = new STLLoader();
-
-  loader.load(
-    'Assets/b02.stl', 
+const sceneLoader = new GLTFLoader();
+  sceneLoader.load(
+    'Assets/Maps/Room.gltf', 
 	  
-    function (geometry) {
-        const material = new THREE.MeshStandardMaterial({ color: 0x363636 });
+    function (geometry,material) {
         const cube = new THREE.Mesh(geometry, material);
         cube.scale.set(10, 10, 10)
         scene.add(cube);
