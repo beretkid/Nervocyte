@@ -1,5 +1,5 @@
 <div id="sky"style=" background-image: url('Assets/skybox.png'); 
-    background-repeat: repeat; z
+    background-repeat: repeat; 
     border: 0px;
     background-position: 0px bottom; 
     background-origin: padding-box;
@@ -66,6 +66,7 @@
   const rotationSpeed = Math.PI / 180 * 2;
 
   const canvas = document.getElementById('visuals');
+  
   const ctx = canvas.getContext("2d");
   const hphs = document.getElementById("hphs")
   var pressedKeys = []
@@ -83,7 +84,7 @@
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // CRITICAL FIX: Set Euler order to YXZ for proper FPS controls once at setup
-	
+
     var upVector = new THREE.Vector3(0, 1, 0); // Fuck whoops that was a const
   // Define the X-axis vector globally once (for movement calculations if needed later)
   var sideVector = new THREE.Vector3(1, 0, 0);
@@ -137,36 +138,36 @@ const textureCube = cloader.load([
 
   scene.background = textureCube;
     //add skybox
-    textureLoader.load( 'Assets/skybox.png', (texture) => {
+    //textureLoader.load( 'Assets/skybox.png', (texture) => {
 	
-    scene.background 
-    })
+    //scene.background 
+    //})
 	
   const floor = new THREE.Mesh(geometry2, groundtex);
   scene.add(floor);
   floor.position.set(0, 0, 0); // Cleaner way to set position
   
   const loader = new STLLoader();
-var loadedScene = null
 
-
-const sloader = new GLTFLoader();
-sloader.load(
-    'Assets/Maps/Room.gltf',
-    function ( gltf ) {
-    scene.add( gltf.scene );
-    loadedScene = gltf.scene;
-    console.log("GLTF model loaded and added to scene!", loadedScene); // <-- ADD THIS
-},
-    // Optional: called while loading is progressing
-    function ( xhr ) {
-        console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
+  loader.load(
+    'Assets/Maps/model.stl', 
+	  
+    function (geometry) {
+        const material = new THREE.MeshStandardMaterial({ color: 0x363636 });
+        const cube = new THREE.Mesh(geometry, material);
+        cube.scale.set(10, 10, 10)
+        scene.add(cube);
+        console.log('Model loaded successfully!');
+        renderer.setAnimationLoop( animate );
+        cube.position.y = 5
+        camera.position.z = 4;
+       camera.rotation.x = Math.PI / 2; // 1.5708 radians
     },
-    // Optional: called when loading has errors
-    function ( error ) {
-        console.error( 'An error happened', error );
+    undefined, 
+    function (error) {
+        console.error('An error occurred while loading the model:', error);
     }
-);
+  );
     
   var wdown = false
   var adown = false
