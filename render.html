@@ -158,8 +158,8 @@ sloader.load(
     function ( glb ) {
         // This function runs AFTER the model (and all its embedded assets) is downloaded.
         console.log("GLB model loaded and added to scene!"); 
-        scene.add( gltf.scene );
-        loadedScene = gltf.scene;
+        scene.add( glb.scene );
+        loadedScene = glb.scene;
     },
     // Optional: called while loading is progressing
     function ( xhr ) {
