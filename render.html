@@ -83,7 +83,7 @@
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
   // CRITICAL FIX: Set Euler order to YXZ for proper FPS controls once at setup
-
+	
     var upVector = new THREE.Vector3(0, 1, 0); // Fuck whoops that was a const
   // Define the X-axis vector globally once (for movement calculations if needed later)
   var sideVector = new THREE.Vector3(1, 0, 0);
@@ -154,11 +154,10 @@ const sloader = new GLTFLoader();
 sloader.load(
     'Assets/Maps/Room.gltf',
     function ( gltf ) {
-        // Add the loaded content (which is a Group/Scene) to your main scene
-        scene.add( gltf.scene );
-        // Store a reference if you plan to remove it later
-        loadedScene = gltf.scene;
-    },
+    scene.add( gltf.scene );
+    loadedScene = gltf.scene;
+    console.log("GLTF model loaded and added to scene!", loadedScene); // <-- ADD THIS
+},
     // Optional: called while loading is progressing
     function ( xhr ) {
         console.log( ( xhr.loaded / xhr.total * 100 ) + '% loaded' );
