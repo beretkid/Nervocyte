@@ -1,289 +1,3298 @@
+<!DOCTYPE html>
 
 <html>
-	<head>
-		<link rel="icon" type="image/png" href="favicon.png">
-		<title>Nervocyte</title>
-	</head>
-	<style>
+<head>
+<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval' https://unpkg.com 'unsafe-inline';">
 
-		@keyframes moveIt {
-  from {background-position: bottom left;}
-  to {background-position: top right;}
-}
-	</style>
-	<body style="background-image: url('Assets/flesh3.png'); 
-    background-repeat: repeat; animation: moveIt 10s linear infinite;  background-Size: 128px 128px;">
-<div id="LogBar"style="position:absolute;top:0%;left:0%;border:2px solid;border-color:#362213;width:50%;height:75%">
+
+
+
+<body>
+
+<div style="position:absolute; width:520px; height:64px; top:50%;left:50%;display: flex;z-index:8;overflow:auto;color:#c9a100;"  id="messageBox" ></div>
+<h1>If your seeing this you either need to enable javascript or something broke.</h1>
+<img hidden=true src="pod.png" id="pod">
+<script src="https://unpkg.com/peerjs@1.5.5/dist/peerjs.min.js"></script>
+
+<img hidden=true src="a2.png" id="rock1">
+<img hidden=true src="p2.png" id="p1">
+<img hidden=true src="p1.png" id="p2">
+<img hidden=true src="sun.png" id="sunSprite">
+<img hidden=true src="t1.png" id="t1">
+<img hidden=true src="t2.png" id="t2">
+<img hidden=true src="t3.png" id="t3">
+<img hidden=true src="t4.png" id="t4">
+<img hidden=true src="t5.png" id="t5">
+<img hidden=true src="p3.png" id="p3">
+<img hidden=true src="p4.png" id="p4">
+<img hidden=true src="freighter.png" id="freightSprite">
+<img hidden=true src="fighter.png" id="fighterSprite">
+<img hidden=true src="component.png" id="compSprite">
+<img hidden=true src="explosion.png" id="explosionSprite">
+<img hidden=true src="laser.png" id="laserSprite">
+<img hidden=true src="debris1.png" id="d1">
+<img hidden=true src="a3.png" id="a3">\
+<img hidden=true src="station.png" id="stationSprite">
+<img hidden=true src="debris2.png" id="d2">
+<img hidden=true src="rGib1.png" id="rGib1">
+<img hidden=true src="rGib2.png" id="rGib2">
+<img hidden=true src="spark.png" id="spark1">
+<img hidden=true src="flash.png" id="flash">
+<img hidden=true src="dd1.png" id="dd1">
+<img hidden=true src="dd2.png" id="dd2">
+<img hidden=true src="dd3.png" id="dd3">
+<img hidden=true src="b1.png" id="b1">
+<img hidden=true src="b2.png" id="b2">
+<img hidden=true src="b3.png" id="b3">
+<img hidden=true src="b4.png" id="b4">
+<img hidden=true src="b5.png" id="b5">
+<img hidden=true src="b6.png" id="b6">
+<img hidden=true src="GatlingDrone.png" id="minigunDrone">
+<img hidden=true src="RocketDrone.png" id="rocketDrone">
+<div style="z-index:9;position:absolute;top:0%;left:0%;"id="logo">
+<img src="Logo.gif" >
+<hr>
+<h1 style="color:#c9a100;">How to play 🡣</h1>
+<div style="color:#c9a100;">W and S | Main Thruster</div>
+<div style="color:#c9a100;">A and D | Turning</div>
+<div style="color:#c9a100;">Q and E | Strafing</div>
+<div style="color:#c9a100;">O and P | Zooming</div>
+	<div style="color:#c9a100;">Space | Shoot</div>
+<div style="color:#c9a100;">G | Control panel </div>
+<div style="color:#c9a100;">C | Camera mode </div>
+<div style="color:#c9a100;">Z | Percision mode </div>
+<div style="color:#c9a100;">T | Use ship terminal </div>
+<div style="color:#c9a100;">V | toggle main menu </div>
+<div style="color:#c9a100;">l | Show/Hide aimlaser </div>
+<div style="color:#c9a100;">~ | Debug mode </div>
+<div style="color:#c9a100;">H| toggle this menu </div>
+<hr>
+<div style="color:#c9a100;">Tip: Each system effects its own thing and will use your overall power usage. </div>
+<div style="color:#c9a100;">Tip Jr: You are NOT immortal, pay attention to your health and oxygen meters!</div>
+<div style="color:#c9a100;">--Low oxygen will cause your screen to darken slowly and will kill you if unremedied.</div>
+<div style="color:#c9a100;">Press any key (or 'h' if you opened this menu) to this menu! </div>
+
 </div>
-<image hidden=true id="NeuronMinigame" style="top:75%;left:0%;width:50%;height:50% "src="Assets/NeuronMinigameN.png" >
-<input type="text" id="input" value=""style="position:absolute;top:50%;left:50%;">
+<!--station docking UI.-->
+<div style="color:#c9a100;z-index:10;position:fixed;top:0%;right:0%;width: 35%;height: 100vh;background-color:#0f0f0f;"id="stationUI"   >
+<div id="conGrain"style="background-image: url('static.gif');position:absolute;width: 100%;height: 100%; z-index:12;top:0%;left:0%;pointer-events: none;"></div>
+<div style="color:#c9a100;z-index:10;top:0%;left:0%;width: 100%;height: 90%;display: flex; background-color:#141414;overflow:auto;flex-direction: column-reverse;background-image: url('UIBK.gif');background-Size: 100px 100px;"id="stationConsole"  >
 
-<iframe style="position:absolute;top:0%;left:0%;border:2px solid; z-index:10;border-color:#0f0f0f;width:100%;height:100%;pointer-events: none;" src="render.html" id="iframe"></iframe>
-</body>
+</div>
+<div style="color:#c8a100;z-index:10;top:90%;left:0%;width: 255px;height: 10%; background-color:#141414;"id="sUiCPanel" > 
+<input type="text" id="scInput">
+</div>
+</div>
+<!-- Sky -->
+<img src="DebugEnabled.gif" id="debugIcon" style="z-index:9;position:absolute;top:0%;left:0%;" hidden=true>
+<div class="StarsFront" id="sky" style=" background-image: url('stars.png'); 
+    background-repeat: repeat;  
+    border: 0px;
+    background-position: 0px 0px;
+	
+    top: 0%;
+    left: 0%;
+    margin: 0;
+    padding: 0;
+	 background-Size: 350px 350px;
+	 
+	 position:fixed;
+	width: 2000vw;
+    height: 2000vh;
+	 z-index:2;" >
+</div>
+<div class="tiled-background" style="
+    min-height: 100vh; 
+    border: 0px;
+    background-color: black;
+	position: fixed; /* Fixes them to the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+	 z-index:1;" >
+</div>
+
+<canvas id="map" hidden=true width="250" height="250" style="background-image: url('MapBk.gif'); background-Size: 10px 10px;
+    background-repeat: repeat;  position:absolute;top:0%;left:0%;border:0px solid;border-color:#0f0f0f;z-index:7" ></canvas>
+<canvas id="lidar" style="top:0%;left:0%;position:absolute;z-index:8;"></canvas>
+<canvas id="visuals" width="100" height="100" style="position:absolute;top:0%;left:0%;border:0px solid;border-color:#0f0f0f;z-index:5" >
+
+</canvas>
+<canvas id="backgroundVisuals" width="100" height="100" style="position:absolute;top:0%;left:0%;border:0px solid;border-color:#0f0f0f;z-index:4" >
+
+</canvas>
+<div hidden=true style="position:absolute;background-color:#b3b3b3;z-index:19;width:50%;height:50%;top:25%;left:25%;border-style:inset;position:absolute"id="menuHolder">
+<div style="background-color:#b3b3b3;z-index:14;width:20%;height:100%;top:0%;left:0%;overflow:auto;position: absolute"id=menuSidebar  >
+</div>
+<div  style="background-color:#b3b3b3;z-index:14;width:80%;height:100%;top:0%;left:20%;overflow:auto;position: absolute;"id="menu">
+
+
+ <div hidden=true style="top:0%;left:0%;position:absolute;width:100%;height:100%;">
+  <div id="systemsList" style="top:10%;left:0%;width:45%;height:70%;"></div>
+  <div id="systemsSubList" style="top:10%;left:45%;width:45%;height:70%;position:absolute"></div>
+  </div>
+<div hidden=true style="top:0%;left:0%;position:absolute;width:100%;height:100%;">
+  <h1>Station</h1>
+  <div id="itemsList2" style="top:10%;left:0%;width:45%;height:70%;"></div>
+  </div>
+  <div hidden=true style="top:0%;left:0%;position:absolute;width:100%;height:100%;">
+  <text>Commerse</text>
+   <button id="buyButton" style="top:10%;left:15%;">Buy</button>
+	<button onClick="changeCatagory('all')">All</button>
+	<button onClick="changeCatagory('upgrades')">Upgrades</button>
+	<button onClick="changeCatagory('services')">Services</button>
+	<button onClick="changeCatagory('consumables')">Consumables</button>
+  <div id="itemsList" style="top:10%;left:0%;width:45%;height:70%;"></div>
+ <div  id="UICreditsAmnt" style="">Credits</div>
+ <input  id="amntSel" type="number" value=1>
+  <div id="stat1" style="top:60%;left:35%;position:absolute;"></div>
+   <div id="stat2" style="top:50%;left:35%;position:absolute;"></div>
+  </div>
+
+    <div hidden=true style="top:0%;left:0%;position:absolute;">
+  <h1>You</h1>
   
+  </div>
+   <div hidden=true style="top:0%;left:0%;position:absolute;width:100%;height:100%;">
+	<h1>!!WARNING, DONT PLAY WITH ANYBODY YOU DO NOT TRUST WITH YOUR COMPUTER!!</h1>
+	<input id="mpid"><button id="mprg">Join ID</button>
+	<h2 id="MPplrID">Multiplayer disabled!</h2>
+  </div> 
 
-</html>
+
+
+  
+</div>
+</div>
+
+
+
+<div style="position:absolute;background-color:#b3b3b3;z-index:6;width:175px;height:300px;top:50%;left:50%;border-style:inset;overflow:auto;"id="sysMenu">
+</div>
+<div style="position:absolute;background-color:#b3b3b3;z-index:8;width:200px;height:100px;top:0%;left:0%;border-style:inset;overflow:auto;"id="sysSelectBox">
+<img src="power.png"id="powerSwitch" width=25 >
+<img src="jettison.png" width=25 id="jettisonSwitch"> 
+<img src="repair.png"style="width:25px"id="repairButton">
+<hr>
+<div id="powerMeter">
+
+</div>
+
 <script>
-zoom=0
 
-//mood 0 = neutral +=happier -=sadder
-hour = 0
-minute = 0
-w = window.innerWidth
-h = window.innerHeight
-day = 0
-player = {name:"The host",mood:0,injuries:[],hunger:100,thirst:100,stamina:100,tiredness:0,traits:[],skills:{perception:1,swiftness:1,building:1,gardening:1,sanity:100,control:100},r:0,opin:5,cr:0,x:0,y:0,w:10,h:10}
-var rooms = []
-entities = [player,{name:"Huge_wall",cr:1,desc:"A massive, dark-ish metal wall, it seems to be curved. you wonder where the gate to sutch a massive peice of arcitecture would be.",x:-500,y:0,w:1000000,h:10}]
-rooms = [{name:"Field",desc:"A large open field, devoid of grass, the place looks pretty desaturated.",contents:[entities[0]],north:1,south:null,hostThoughts:"Not.. entirely sure what happend here or what that liquid is of but im sure its normal, i see puddles of mystery juice all the time"},{name:"Gate",desc:"A field stands in contrast to a massive wall, you havent seen anything like it before",hostThoughts:"if there was one wish i could make it would be to destroy the citadel and their stupid wall",south:0,contents:[entities[1]]}]
-opinmsg=["I gotta get this out of here no matter what","Get out of my head, get OUT","Im getting rid of you the next chance i get","i prefer to not have a parasite in me","im not sure if your in here to help or not","your alright i suppose."]
 
-const pressedKeys = {};
 
-pb = document.getElementById("ptop")
-message = document.getElementById("LogBar")
-input = document.getElementById("input")
-function getRoom(dir,ent) {
-if (dir="north") {
-return rooms[ent.cr].north
+// --- Global Variables (FIXED) ---
+var canvas = document.getElementById('visuals');
+
+var ctx = canvas.getContext("2d");
+var lidar=document.getElementById('lidar')
+lidar.width=w
+lidar.height="10px"
+lidar.style.top = `${h-10}px`
+var lctx=lidar.getContext("2d")
+var map = document.getElementById('map');
+var mapctx = map.getContext("2d");
+var bCan = document.getElementById('backgroundVisuals');
+var bctx = bCan.getContext("2d");
+var debug=false
+var selectedTile = [0,0]
+var rock1 = document.getElementById("rock1")
+var selectedSys
+var gFree = document.getElementById("gFree")
+var laserSprite = document.getElementById("laserSprite")
+function changeCatagory(cat){
+selectedCatagory=cat
+itemsList.innerHTML=""
+updateMenu()
+
+}
+var renderedEnts=[]
+  const audImpact1 = new Audio("oddioimpct2.ogg")
+  const audEngine = new Audio("thruster2.ogg")
+  const audBoom = new Audio("boom1.ogg")
+  const audAlarm = new Audio("alarm.ogg")
+  const audAlarm2 = new Audio("alarm2.ogg")
+  audEngine.loop = true
+var UICreditsAmnt=document.getElementById('UICreditsAmnt');
+var avrgDamage=0
+var gHold = document.getElementById("gHold")
+var dronesprite = document.getElementById("pod")
+var ticksUntilBoom=-10
+var wd=false
+var sd=false
+var pd=false
+var od=false
+var bd=false
+var td=false
+var tickDelay = 0
+var timeSinceLastInput=0
+var c0 = document.getElementById("c0")
+var a3 = document.getElementById("a3")
+var c1 = document.getElementById("c1")
+var c2 = document.getElementById("c2")
+var c3 = document.getElementById("c3")
+var c4 = document.getElementById("c4")
+var c5 = document.getElementById("c5")
+var t1 = document.getElementById("t1")
+var t2 = document.getElementById("t2")
+var t3 = document.getElementById("t3")
+var t4 = document.getElementById("t4")
+var UIBuyButton = document.getElementById("buyButton")
+var rGib1 = document.getElementById("rGib1")
+var rGib1 = document.getElementById("rGib2")
+var minigunDrone = document.getElementById("minigunDrone")
+var rocketDrone = document.getElementById("rocketDrone")
+var sprk1 = document.getElementById("spark1")
+var itemsList = document.getElementById("itemsList")
+var systemsList = document.getElementById("systemsList")
+var systemsSubList = document.getElementById("systemsSubList")
+var menuHolder=document.getElementById("menuHolder")
+var menuSidebar=document.getElementById("menuSidebar")
+var fighterSprite = document.getElementById("fighterSprite")
+var lasers=[]
+var p4 = document.getElementById("p4")
+var compSprite = document.getElementById("compSprite")
+var freightSprite = document.getElementById("freightSprite")
+var stationSprite = document.getElementById("stationSprite")
+var explosionSprite = document.getElementById("explosionSprite")
+var selectedCatagory = "all"
+//var t4 = document.getElementById("t4")
+// Add new wall references:
+var debugIcon = document.getElementById("debugIcon")
+var stationUI = document.getElementById("stationUI")
+var stationConsole = document.getElementById("stationConsole")
+var menu = document.getElementById("menu")
+var repairing = false
+var scIn = document.getElementById("scInput")
+var newPosX = 0
+var newPosY = 0
+var ukp = false
+var collided=false
+var speedDiff=0
+var speed=0
+var driving=true
+var off=Math.PI*-2
+var conStatic=document.getElementById("conGrain")
+conStatic.classList.toggle('faded');
+var dkp = false
+var power=1000
+var gt=0
+var heat=1
+var submaptype=0
+var fuel = 10000
+const corruptionSymbols=["#","*","%","$","_","!"]
+const corruptionSymbolsCrit="!@#$%^&*()~`+=-_{}|[]\:;'/.,?><QWERTYUIOPASDFGHJKLZXCVBNM1234567890 ".split('').push("ERR","")
+const cOff=2
+//start at 10000
+const settings={generateField:true,runOutOfView:true,renderDist:w*h,cameraChase:true,paused:false,hardPaused:false,drawFOV:false,lightFalloff:4,conSize:1.5,gameSpeed:10,screenDarkness:50,notifEnabled:true,astroidsCollide:true,lazySV:false,freindlyDrones:false,lasersHurt:true,sharpShooterDrones:false,aimLaser:false,showTD:false,slowLag:false,indClean:false,hivisLasers:true,lineSize:7,multiplayer:true,canvready:false,minimap:true,lidar:true,rayCount:175,rayRadius:10,renderBackground:true};
+var rkp = false
+var zd = false
+var spin = 0
+var lkp = false
+var ox = 0
+var oy = 0
+var hoff=0
+var ox3 = 0
+canvas.width = window.innerWidth/settings.conSize
+canvas.height = window.innerHeight
+map.width = 450
+map.height = 450
+//default 650
+var w = window.innerWidth/settings.conSize
+var h = window.innerHeight
+stationUI.style.left=w
+var zoom=5
+var colliding = false
+var commandedSpeed=0
+var selectedTile = [0,0]
+var oy3 = 0
+var ox2 = 0
+var sizeoff=1
+var oy2 = 0
+var youAreDie=false
+var cc = gFree
+var CtrlDown = false
+var sbdown=false
+var boxTop = document.getElementById("BoxTop")
+var boxSide = document.getElementById("BoxSide")
+var mouseX; 
+var mouseY; 
+var strafeSpeed=0
+const msgBox=document.getElementById("messageBox")
+//align msgbox
+msgBox.style.left = `${(0)}px`
+msgBox.style.top = `${(window.innerHeight-64)}px`
+
+var mx = 0;
+var my = 0;
+var interacted=false
+var smoothX = 0;
+var smoothY = 0;
+var cwidth=canvas.innerWidth
+var cheight=canvas.innerHeight
+var curr2
+bCan.width = window.innerWidth/settings.conSize
+bCan.height = window.innerHeight;
+var player = {hp:100,air:100,repairCharges:8,dizzy:0,rearCD:0,cameraThrow:0,cameraThrowX:0,cameraThrowY:0,cCon:false,droneKills:0,credits:1000,jobs:[],driving:true,visionRadius:45,docked:false,dCool:0,typing:false,dockedStation:null,upgrades:{controlPanel:{installed:true,cost:500,des:"Ctrl_panel"}},inCrisis:false,astroidKills:0,fired:false,pendingWarnings:[],speed:0.00165,living:Date.now()}
+var xo
+var drone = {x:50,y:0,t:0,w:32,h:32,r:0,hp:100,sx:0,sy:0,r:0,mass:1,brakes:false}
+var turnSpeed=0
+var MenuLayout = 0
+var upgradeDatabase={heavyArmor:{dmgRes:12,c:"armor",name:"Heavy Armor"},martianArmor:{dmgRes:7,c:"armor",name:"Vicerite Armor Armor" },heavyLaser:{dmgRes:2,c:"laser",name:"Proton Missile",projType:"seekerOrb"}}
+//0=home
+//1=station
+//2=personal stats
+
+var yo //Hi?????
+// i don't remember writing tha-- OH THIS STANDS FOR Y OFFSET I'M A DUMBASS
+
+function cloneObj(obj) {
+	newObj={}
+for (i9 in obj){
+newObj[i9]=obj[i9]
+}
+if(obj==station){station=newObj
+newObj.x = 0
+newObj.y = 0
+}
+return newObj
+
+}
+function unloadEnts(keep) {
+obj=cloneObj(keep)
+console.log(obj)
+entities.splice(0,entities.length)
+entities.push(obj)
+}
+var x
+var y
+var timeSinceLastMsg=0
+var pmode=false
+var ad=false
+var trueTurn=0
+var ed=false
+var rd = false
+var dying=false
+var sx=0
+var sy=0
+var mpReady=false
+var mpcReady=false
+var mapsubtype=0
+var bkRendered=true
+var decos=[{sprite:b1,minSize:25,maxSize:75,odd:true},{sprite:b2,minSize:25,maxSize:75,odd:true},{sprite:b3,minSize:25,maxSize:75,odd:true},{sprite:b4,minSize:0,maxSize:2,odd:false}]
+//controller support
+window.addEventListener("gamepaddisconnected", (controller) => {
+newGamepad(controller)
+});
+window.addEventListener("gamepadconnected", (controller) => {
+newGamepad(controller)
+});
+
+function newGamepad (c) {
+player.cCon=true
+
+console.log(c)
+
 }
 
-if (dir="south") {
-return rooms[ent.cr].south
+
+
+//register yourself to da web
+plrID=document.getElementById("MPplrID")
+if (settings.multiplayer) {
+
+var peer = new Peer("MPUTTPLUS-"+random(1000,9999)+"-"+random(1000,9999));
+peer.on("open", function (id) {
+  console.log("My peer ID is: " + id);
+  plrID.innerHTML="ID: "+String(id).replace("MPUTTPLUS-", "");
+	mpReady=true
+
+peer.on('error', function(err) {console.log(err)});
+mprg.addEventListener('click', (evnt) => {
+
+mp= peer.connect("MPUTTPLUS-"+String(mpid.value));
+mp.on('error', function(err) {console.log(err)})
+mp.on('open', function(mp2) {
+heartstop=true
+
+console.log("AHGHHHHHHH (Connected!)")
+mpcReady=true
+mpClientTick();
+
+});
+
+})
+});
+
+//almost named this 'mpreg' short for multiplayer register 
+var mprg = document.getElementById("mprg")
+
+var mpid = document.getElementById("mpid")
+
+
+
+var MPconnected=false
+
 }
+var heartstop=false
+
+function getMovedir(x,y,vx,vy) {
+return pointAt(x,y,x+vx,y+vy)
 }
-function random(min,max) {
-    return min + Math.floor(Math.random() * (max-min))
+
+function adaptWindow() {
+canvas.width = window.innerWidth/settings.conSize
+canvas.height = window.innerHeight;
+
+w=canvas.width
+h=canvas.height
+lidar.width=w
+lidar.height=10
+lidar.style.top = `${h-10}px`
+bCan.width = window.innerWidth/settings.conSize
+bCan.height = window.innerHeight;
+sky.style.top=`${(-h)}px`; 
+sky.style.left=`${(-w)}px`; 
+console.log("Adapting window(Canvas/GameWidth/Window):",canvas.width,w,window.innerWidth/settings.conSize)
 }
-  function aRGB(a,b,c) {
-  
-return "rgb(" + a + "," + b + "," + c + ")"
+function cavrg(arr) {
+  if (arr.length === 0) {
+    return 0; // Return 0 or any other default value for an empty array
   }
-  function countOccurrences(dividend, divisor) {
-  if (divisor === 0) {
-    throw new Error("Divisor cannot be zero.");
+
+  const sum = arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+  return sum / arr.length;
+}
+var seconds=0
+var qd=false
+function checkTxtMatch(arg1,arg2){
+return (String(arg1)==String(arg2)||String(arg2)==String(arg1).split('')[0]+String(arg1).split('')[1]+String(arg1).split('')[2]);
+}
+function getAvrg(arr) {
+collected=[]
+for (i15 in arr) {
+collected.push(arr[15])
+
+}
+
+return collected
+}
+
+
+//get menu mode behaviors
+var mode = 0
+const modes = [{name:"Home"},{name:"Station"},{name:"Trade"},{name:"Settings"},{name:"Multiplayer"}]
+for (i in modes) {
+newDiv = document.createElement('div')
+menuSidebar.appendChild(newDiv)
+newButt = document.createElement('button');
+menuSidebar.appendChild(newButt)
+newButt.textContent=modes[i].name
+newText=document.createElement('body')
+newDiv.appendChild(newText)
+newButt.mode=i
+lastPressed=newButt
+
+partSelected=i
+
+newButt.style.backgroundColor = "lightgrey";
+
+newButt.addEventListener('click', (evnt) => {
+
+src=evnt.srcElement
+mode=src.mode
+
+// load layout
+updateMenu()
+});
+
+}
+
+
+//for (i in menu.children) {
+//c=menu.children[i]
+//if (c.v){
+//c.innerHTML = c
+//}
+//}
+
+var selectedItem = 0
+
+function updateMenu(){
+
+for (i in menu.children) {
+c=menu.children[i]
+if(i==mode){
+theChosenOne=menu.children[i]
+c.hidden=false
+}else{c.hidden=true}
+
+
+
+}
+//page behaviors
+
+if(mode==5){
+
+
+
+
+}
+if(mode==0) {
+i72=0
+for (i7 in systems) {
+
+
+if (!systemsList.children[i72]){
+
+
+
+newDiv = document.createElement('div')
+systemsList.appendChild(newDiv)
+newButt = document.createElement('button');
+newDiv.appendChild(newButt)
+newButt.textContent=systems[i7].des
+newButt.ref=i7
+//select
+
+newButt.addEventListener('click', (evnt) => {
+if (lastSel){lastSel.style.backgroundColor="#d9d9d9"}
+systemsSubList.innerHTML=''
+
+src=evnt.srcElement
+selectedSys=src.ref
+src.style.backgroundColor="#6f77c7"
+lastSel=src
+// load layout
+updateMenu()
+});
+}
+i72+=1
+}
+//other menu shit
+if(selectedSys){
+i72=0
+
+for (i7 in systems[selectedSys].types){
+
+if (!systemsSubList.children[i72]){
+
+
+
+newDiv = document.createElement('div')
+systemsSubList.appendChild(newDiv)
+newButt = document.createElement('button');
+newDiv.appendChild(newButt)
+newButt.textContent=systems[selectedSys].types[i72].name
+newButt.ref=i7
+newButt.addEventListener('click', (evnt) => {
+//apply new type
+systems[selectedSys].typeUsed=newButt.ref
+for (i9 in systems[selectedSys]) {
+
+if (systems[selectedSys].types[newButt.ref][i9]){
+
+systems[selectedSys][i9]=systems[selectedSys].types[newButt.ref][i9]
+}
+}
+})
+}
+i72+=1
+}
+}
+}
+if(mode==2) {
+newButt={ref:"gahhh"}
+
+itemsList.innerHTML=""
+
+for (i7 in station.store) {
+UICreditsAmnt.innerText="Credits: "+player.credits+"C"
+//check if there a button, if there isnt, make one.
+if (itemsList.children[i7]) {
+
+} else {
+
+if ((station.store[i7].catagory==selectedCatagory||selectedCatagory=="all")){
+newDiv = document.createElement('div')
+itemsList.appendChild(newDiv)
+newButt = document.createElement('button');
+newDiv.appendChild(newButt)
+newButt.textContent=station.store[i7].des+" ("+station.store[i7].amnt+") "+station.store[i7].cost+"c"
+newButt.ref=i7
+//select
+
+newButt.addEventListener('click', (evnt) => {
+if (lastSel){lastSel.style.backgroundColor="#d9d9d9"}
+
+
+src=evnt.srcElement
+console.log(src)
+selectedItem=String(src.ref)
+src.style.backgroundColor="#6f77c7"
+lastSel=src
+// load layout
+updateMenu()
+});
+}
+}
+}
+}
+if(mode==3) {
+
+}
+}
+updateMenu()
+
+UIBuyButton.addEventListener('click', (evnt) => {
+inTerm("store buy "+station.store[selectedItem].des+" "+Number(amntSel.value))
+
+// load layout
+updateMenu()
+});
+
+var lastSel
+function spawnDrone(x,y,type,tx,ty) {
+
+sprite=fighterSprite
+health=60
+fc=75
+dmg = 20
+acc=3
+subtype="normal"
+if (type==2){
+sprite=minigunDrone
+health=95
+fc=7
+dmg = 5
+acc=7
+subtype="gatling"
+}
+if (type==3){
+sprite=rocketDrone
+health=95
+fc=300
+dmg = 20
+acc=1
+subtype="rocket"
+}
+
+if (tx&&ty) {
+important=true
+}else {important=false;
+tx = x
+ty = y
+}
+entities.push({x:x,y:y,w:22,h:22,sprite:sprite,dist:1,type:"fighterDrone",t:0,sx:0,sy:0,t:0,r:12,subtype:subtype,visible:true,mass:2,health:100,targ:{x:tx,y:ty,t:0,thrust:0,important:important,memory:10},tt:0,cool:0,locked:false,bOff:gt+random(-100,100),dieSpinDir:random(-1,1,0),health:60,fireCool:fc,dmg:dmg,acc:acc,task:"idle",strafing:false})
+
+}
+function sendDrone() {
+console.log("drone Sent.")
+rDist=random(fieldRadius,fieldRadius+500)
+rDir=random(-180,180,0)*Math.PI/180
+rx=Math.sin(rDir)*rDist
+ry=Math.cos(rDir)*rDist
+spawnDrone(rx,ry,"fighterDrone",drone.x,drone.y,random(1,4))
+player.pendingWarnings.push("More drones have entered the field.")
+}
+function getAvrgObj(value,arr) {
+collected=[]
+for (i15 in arr) {
+collected.push(arr[i15][String(value)])
+
+}
+return cavrg(collected)
+}
+function debrisBoom(x,y) {
+for (let i16 = 0; i16 < dCount; i16++) {
+randSize=curr.r/random(4,7,0)
+newMove={x:curr.x+random(-1,1,0),y:curr.y+random(-1,1,0)}
+randLife=random(70,450)
+sprite=document.getElementById("dd"+String(random(1,3)))
+
+entities.push({x:x,y:y,w:randSize,h:randSize,sprite:sprite,dist:1,type:"debris",sx:curr.sx+random(-1,1,0),sy:curr.sy+random(-1,1,0),t:drone.t,r:randSize,ts:turnSpeed+random(-10,10,0),life:randLife,noCollide:true,mass:0.1,sparky:true})
+}
+}
+
+function inTerm(rawtxt) {
+//parse the text
+if(mpcReady){
+con = rawtxt
+console.log("sending msg..")
+}else{
+halfmadeTxt=rawtxt.replaceAll("@","@ ").replaceAll("^","^ ").replaceAll("/","/ ").replaceAll("$","$ ")
+
+pushConMsg(">>"+rawtxt)
+
+halfmadeTxt=halfmadeTxt.toLowerCase().split(' ')
+console.log(halfmadeTxt)
+txt=halfmadeTxt[0]
+
+if (halfmadeTxt.length>1){
+arg1=halfmadeTxt[1]
+}else(arg1="")
+if (halfmadeTxt.length>2){
+arg2=halfmadeTxt[2]
+}else(arg2="")
+if (halfmadeTxt.length>3){
+arg3=halfmadeTxt[3]
+}else(arg3="")
+
+//alright i think i know what they said..
+
+
+//am i communicating with a station?
+if(player.docked){
+if(txt=="help"||txt=="h"||txt=="?") {pushConMsg("'Undock': Initiates undocking procedure.")
+pushConMsg("'Clear': Clears this console.")
+pushConMsg("'Store': Sends store manifest packet.")
+pushConMsg("'Jobs': Sends available job manifest packet.")
+}
+if (txt=="undock"){
+player.docked=false
+settings.paused=false
+settings.hardPaused=false
+player.dCool=750
+    canvas.width = window.innerWidth/settings.conSize
+    canvas.height = window.innerHeight;
+    canvas.focus();
+}
+if (txt=="store"){
+	//migrate to seperate system using arrays please, this is required dont make a bit for every single thing please good god.
+	//buy things
+	if (!arg1) {
+		for (i3 in station.store) {
+			c=station.store[i3]
+		    pushConMsg("'"+c.des+"'("+c.amnt+"): "+c.cost+"c")
+		}
+	}else{
+		if(arg1=="buy"){
+			selected=undefined
+			
+			for ( i9 in station.store) {
+				console.log(arg2,station.store[i9].des.toLowerCase(),checkTxtMatch(arg2,station.store[i9].des.toLowerCase()))
+			if (checkTxtMatch(station.store[i9].des.toLowerCase(),arg2)){
+				selected=station.store[i9]
+			}
+			
+		}
+		amnt=Math.abs(Number(arg3))
+		if(!arg3){amnt=1}
+		console.log(selected)
+		if(selected&&player.credits>=selected.cost*amnt&&selected.amnt>=amnt){
+			//ok we can actualy buy this
+			selected.amnt-=arg3
+			//no multiple full repairs in one go, the mechanic is very tired.
+								if (selected.cd=="repair"){
+				for (i in systems) {
+				systems[i].dam=Math.max(systems[i].dam-100,0)
+				}
+				amnt = 1
+			}
+			player.credits-=selected.cost*amnt
+			updateMenu()
+
+
+			
+			if (selected.cd=="fuel"){
+				fuel+=amnt
+			}
+
+			if (selected.cd=="repairCharge"){
+				player.repairCharges+=amnt
+			}
+			//upgrades
+			if (selected.upgrade){
+			upgrade=upgradeDatabase[selected.ref]
+			console.log("Gave",selected.ref,upgradeDatabase[selected.ref])
+			giveUpgrade(upgrade)
+				
+			}
+			pushConMsg("Purchased.")
+			
+		}else{pushConMsg("Unable to make purchase!")}
+	}
+}
+}
+if (txt=="warp"){
+unloadEnts(station)
+regenField(5000,Number(arg1+arg3+arg2+arg3+arg1))
+}
+
+if (txt=="upgrade"||txt=="upgrades"){
+matchFound=false
+
+for ( i9 in player.upgrades) {
+item=player.upgrades[i9]
+if (arg2==item.des.toLowerCase()&&!item.installed){
+matchFound=true
+console.log("AH")
+if (player.credits >= item.cost&&arg1=="buy"){player.credits-=item.cost;
+item.installed=true;
+
+pushConMsg("Upgrade installed.");
+pushConMsg("Now at: "+player.credits+"C")
+}
+if (arg1=="info"){player.credits-=item.cost;
+pushConMsg("Cost: "+item.cost);
+pushConMsg("Installed: "+item.installed);
+
+
+}
+}
+}
+if (!matchFound) {
+for ( i9 in player.upgrades){
+item=player.upgrades[i9]
+console.log("wa")
+pushConMsg(item.des+" : "+String(item.cost))
+
+}
+}
+}
+if (txt=="clear"){
+for (i5 in stationConsole.children){
+curr3=stationConsole.children[i5]
+console.log(curr3)
+stationConsole.removeChild(curr3)
+}
+}
+if (txt=="jobs"||txt=="j"){
+pushConMsg("[PACKET MSG RECIEVED]:")
+for ( i9 in player.dockedStation.jobs){
+job=player.dockedStation.jobs[i9]
+pushConMsg("ENTRY"+String(i9+1)+": "+job.name)
+}
+}
+//temp really shitty one
+if (station.jobs[arg1]){
+player.jobs.push(station.jobs[arg1])
+station.jobs.splice(arg1,1)
+pushConMsg("Job Given!")
+}
+}
+//i guess i'm not.
+if(txt=="help"||txt=="h"||txt=="?") {
+pushConMsg("showing help.")
+pushConMsg("tips: you can also use shortend versions of some commands and compononents")
+pushConMsg("(the word 'sub' before the name of a command means it is a subcommand!)")
+pushConMsg("some main commands can be substituted for symbols eg: sys can be @")
+pushConMsg("'help' displays basic commands, for help on a specific topic add a command afer eg:'help sys'")
+pushConMsg("'Clear': Clears this console.")
+pushConMsg("'sys' or '@' base command for system component managment. can also use '@' or 's' for the same result")
+pushConMsg("'repair' or '^' base command for quick component repair. can also use 'r' or 'rep' for the same result")
+pushConMsg("'self' or '$' base command for personal managment.")
+if (arg1=="sys") {
+pushConMsg("'sys' the gateway to all of your general ship component management")
+pushConMsg("sub'stat argument' checks status of component")
+pushConMsg("sub'getall' gets all component names")
+pushConMsg("sub'power' gets all component names")
+pushConMsg("sub'stats argument' gets important info of your components.")
+}
+if (arg1=="self") {
+pushConMsg("'self'($) base command for managing pilot attributes")
+pushConMsg("sub'credits' sends a request to the bank for the pilots balance")
+
+}
+
+}
+if(txt=="repair"||txt=="^"||txt=="r") {
+console.log("im repairing it so gooood")
+if (!arg1==""){
+for (i8 in systems) {
+if(checkTxtMatch(String(i8),arg1)){
+pushConMsg("Initiating repairs on ["+String(i8).toUpperCase()+"].")
+if (player.repairCharges>0&&!repairing){
+player.repairCharges-=1
+
+reminder=i8
+repairing=true
+setTimeout(()=>{
+repairing=false
+rng2 = random(40,60)
+systems[reminder].dam=Math.max(0,systems[reminder].dam-rng2)
+
+pushConMsg("System ["+String(reminder).toUpperCase()+"] repaired by "+String(rng2)+"%.")
+pushConMsg("Repair charges: "+player.repairCharges+"/8")
+},random(1000,2000))
+}else{
+	pushConMsg("Insufficent repair charges!")
+}}
+
+}
+}else{
+pushConMsg("Repair Charges: ["+player.repairCharges+"/6]")
+}
+}
+if(txt=="sys"||txt=="@"||txt=="s"&&!arg1=="") {
+console.log(arg2,String(arg2).split('')[0]+String(arg2).split('')[1]+String(arg2).split('')[2])
+for (i8 in systems){
+curr2=systems[i8]
+if (checkTxtMatch(i8,arg1)) {
+found=true
+if(arg2){
+for(i17 in curr2.settings) {
+curr3=curr2.settings[i17]
+if(checkTxtMatch(curr3.des,arg2)){
+if (arg3){
+curr3.val=Math.max(curr3.min,Math.min(curr3.max,Number(arg3)))
+//set the value of the setting
+}else{
+// send the description of the setting
+pushConMsg("Name: "+curr3.des)
+pushConMsg("Value: "+curr3.val)
+pushConMsg("Min: "+curr3.min)
+pushConMsg("Max: "+curr3.max)
+pushConMsg("Default: "+curr3.default)
+}
+}
+}
+
+}else{
+pushConMsg("DES: "+systems[i8].des)
+pushConMsg("SYSID: " +'"'+i8+'"')
+pushConMsg("EFF: "+systems[i8].eff+"%")
+pushConMsg("HEAT: "+systems[i8].heat+"C")
+pushConMsg("ENABLED: "+systems[i8].on)
+pushConMsg("DAMAGE: "+systems[i8].dam+"%")
+pushConMsg("VARIABLES:")
+for (i17 in systems[i8].settings) {
+pushConMsg(systems[i8].settings[i17].des.toUpperCase()+":"+systems[i8].settings[i17].val)
+}
+
+}
+}
+}
+
+if (arg1=="getall"||arg1=="g"||arg1=="get") {
+
+for (i8 in systems) {
+
+if (systems[i8].eff<85&&systems[i8].on){
+
+addMsg="[!]"
+if (systems[i8].eff<55) {addMsg="[!!]"}
+if (systems[i8].eff<30) {addMsg="[!!!]"}
+if (systems[i8].eff<15) {addMsg="[!!!!]"}
+}else{addMsg="[ ]"}
+pushConMsg(addMsg+" "+i8+" : "+systems[i8].des)
+}
+
+}
+if (arg1=="power"||arg1=="pow"||arg1=="p") {
+
+for (i8 in systems) {
+console.log(String(i8),arg2,String(i8)==arg2)
+if (checkTxtMatch(i8,arg2)) {
+systems[i8].on=!systems[i8].on
+pushConMsg(i8+".pflow = "+String(systems[i8].on).toUpperCase())
+}
+}
+
+}
+if (arg1=="status"||arg1=="stats"||arg1=="s") {
+found=false
+for (i8 in systems) {
+console.log(arg2,String(arg2).split('')[0]+String(arg2).split('')[1]+String(arg2).split('')[2])
+
+if (checkTxtMatch(i8,arg2)) {
+found=true
+pushConMsg("DES: "+systems[i8].des)
+pushConMsg("SYSID: " +'"'+i8+'"')
+pushConMsg("EFF: "+systems[i8].eff+"%")
+pushConMsg("HEAT: "+systems[i8].heat+"C")
+pushConMsg("ENABLED: "+systems[i8].on)
+pushConMsg("DAMAGE: "+systems[i8].dam+"%")
+}
+}
+if(!found) {
+pushConMsg("POWER: "+Math.round(-cpsg*10)/10+"W")
+pushConMsg("OVRALL CND: "+Math.round(100-getAvrgObj("dam",systems))+"%")
+pushConMsg("OVRALL EFF: "+Math.round(getAvrgObj("eff",systems))+"%")
+pushConMsg("Fuel: "+(fuel/100)+"%")
+pushConMsg("Repair charges: "+player.repairCharges+"/8")
+
+
+}
+
+}
+}
+
+
+
+
+
+
+
+if (txt=="self"||txt=="slf"||txt=="$"){
+if (arg1=="credits"||arg1=="c"){
+pushConMsg("Credits balance is at: "+player.credits+"C")
+if ( player.credits < 3 ) {pushConMsg("BROKE MF ALERT!! BROKE MF ALERT!!")}
+
+}
+if (arg1=="stats"||arg1=="s"||arg1==""){
+pushConMsg("Pilot Vitals are at: "+player.hp+"%")
+pushConMsg("Enemy spacecraft kills: "+player.droneKills)
+pushConMsg("Astroids destroyed: "+player.astroidKills)
+pushConMsg("Time flown: "+Math.floor((Date.now()-player.living)/100000)+" Minutes "+Math.floor((Date.now()-player.living)/1000)+" Seconds")
+}
+if (arg1=="jobs"||arg1=="j"||arg1=="job"){
+for (i3 in player.jobs) {
+job=player.jobs[i3]
+pushConMsg("JOB"+String(i3)+": "+job.name)
+pushConMsg("PAY: "+job.reward+"c")
+pushConMsg("FINISHED: "+player[job.stat]+"/"+job.target)
+pushConMsg("")
+}
+}
+}
+}}
+function resetSys(sys) {
+theThing={engine:{dam:0,on:true,des:"Type 1 Engine",heat:0,eff:100,maxHeat:500,insulation:10,pwrUsg:-250,minHeat:-100,missing:false,dmgRes:10,baseUsg:-250,settings:[{des:"flow",val:50,default:50,min:0,max:150}]},cooling:{dam:0,on:true,des:"Cooling System",heat:20,eff:100,maxHeat:150,insulation:0,pwrUsg:50,minHeat:-100,missing:false,dmgRes:1},tank:{dam:0,on:true,des:"Plasma Tank",heat:20,eff:100,maxHeat:125,insulation:0,pwrUsg:0,minHeat:-100,missing:false,baseUsg:0,settings:[],dmgRes:1},gyroscope:{dam:0,on:true,des:"PuttTech Type 3 Gyroscope",heat:20,eff:100,maxHeat:200,insulation:0,pwrUsg:35,minHeat:-100,missing:false,dmgRes:7,baseUsg:35,settings:[{des:"speed",val:50,default:50,min:0,max:150}]},sideThrust:{dam:0,on:true,des:"Side Thrusters",heat:20,eff:100,maxHeat:1000,baseUsg:25,settings:[{des:"flow",val:50,default:50,min:0,max:150}],insulation:10,pwrUsg:25,minHeat:-100,missing:false,dmgRes:1},thruster:{dam:0,on:true,des:"Main Thrusters",heat:20,eff:100,maxHeat:1000,insulation:10,baseUsg:15,settings:[{des:"flow",val:50,default:50,min:0,max:150}],pwrUsg:50,minHeat:-100,missing:false,dmgRes:1},shipComputer:{dam:0,on:true,des:"Ship Computer",heat:0,eff:100,maxHeat:125,insulation:5,pwrUsg:15,minHeat:-200,baseUsg:15,settings:[],missing:false,dmgRes:1},cockpit:{dam:0,on:true,des:"Cockpit",heat:20,eff:100,maxHeat:80,baseUsg:15,settings:[{des:"lifesupport",val:50,min:0,max:150,default:50}],insulation:5,pwrUsg:15,minHeat:-200,missing:false,dmgRes:1},laser:{dam:0,on:true,projType:"default",des:"Mk1 Scout laser",type:"basic",heat:20,eff:100,maxHeat:135,baseUsg:25,insulation:5,pwrUsg:25,minHeat:-200,missing:false,dmgRes:3,cd:0,settings:[{des:"rate",val:50,min:0,max:150,default:50}]},armor:{dam:0,on:true,des:"Armor Plating",heat:20,eff:100,maxHeat:305,insulation:0,pwrUsg:0,minHeat:-100,missing:false,baseUsg:0,settings:[],dmgRes:8,types:[{name:"Stock"},{name:"Nantite Armor"}]}}
+for (i in theThing) {
+theThing[i].usg=0
+if(!theThing[i].types){theThing[i].types=[{name:"Stock",dmgRes:theThing[i].dmgRes}]
+theThing[i].typeUsed=theThing[i].types[0]
+}
+
+}
+return theThing
+}
+
+
+var systems=resetSys()
+
+
+function giveDamage(amntRaw,acc) {
+player.cameraThrow+=random(-1,1)*Math.PI/180
+player.cameraThrowX+=random(-1,1)
+player.cameraThrowY+=random(-1,1)
+//just assume its one if it isnt entered
+amnt = amntRaw/acc
+if (!acc){acc=1}
+for (let i = 0; i < acc; i++) {
+sysList=Object.values(systems);
+
+slen=sysList.length-1
+sysSelect=sysList[random(0,slen)]
+if (String(sysSelect)==systems.cockpit) {
+
+if (amnt>5) {
+//that cockpit aint saving you now pal!
+player.hp-=(amnt/100)*random(10,30)
+pushMsg("You are knocked around by the force of the impact.")
+player.dizzy+=100
+}
+}
+console.log(sysSelect,"is getting damaged")
+//apply armor thingymabobs
+//after 60% damage shit gets bad
+oldDam=sysSelect.dam
+sysSelect.dam+=(amnt/sysSelect.dmgRes)*Math.max(0.6,armor.dam/100)
+if (oldDam<100&&sysSelect.dam>100&&sysSelect.des==systems.armor.des){
+pushConMsg("WARNING: ARMOR CONDITION AT 0%;")
+pushConMsg("CRITICAL SYSTEMS EXSPOSED!")
+}
+//GET DOWN ZIR!!!!
+//take the other 40% dmg. (Its gotta go somewhere (Not really, but fuck you.))
+oldDam=armor.dam
+armor.dam+=(amnt/sysSelect.dmgRes)*Math.max(0.4,armor.dam/100)
+
+if (oldDam<100&&armor.dam>100){
+pushConMsg("WARNING: ARMOR CONDITION AT 0%;")
+pushConMsg("CRITICAL SYSTEMS EXSPOSED!")
+}
+newMove=movedir(sx,sy,random(-180,180),random(0.01,0.1))
+randSize=random(1,6)
+randLife=random(100,1000)
+if(random(0,4)==1&&amnt>5) {
+entities.push({x:drone.x,y:drone.y,w:randSize,h:randSize,sprite:document.getElementById("d"+String(random(1,2))),dist:1,type:"debris",sx:newMove.x,sy:newMove.y,t:drone.t,r:0.0001,ts:turnSpeed+random(-10,10),life:randLife,mass:0.1})
+}
+}
+}
+var lastThing=stationConsole
+function wrapRadian(radians) {
+  const pi2 = 2 * Math.PI;
+  // Use remainder operator and normalize to positive
+  return ((radians % pi2) + pi2) % pi2;
+}
+var cMsgDown=0
+function pushMsg(msg) {
+
+msgBox.innerHTML=msg
+
+
+
+
+timeSinceLastMsg=0;
+}
+var con = ""
+function pushConMsg(msg) {
+splitMsg=msg.split("")
+if(systems.shipComputer.eff<10){
+
+
+for (ii in splitMsg) {
+if(random(0,120-systems.shipComputer.dam/1.1)==0&&systems.shipComputer.eff<90){
+
+splitMsg[ii]=corruptionSymbolsCrit[random(0,corruptionSymbolsCrit.length)]
+
+}
+}
+}
+for (ii in splitMsg) {
+if(random(0,60-systems.shipComputer.dam/2.2)==0&&systems.shipComputer.dam>10){
+
+splitMsg[ii]=corruptionSymbols[random(0,corruptionSymbols.length)]
+
+}
+}
+msg=splitMsg.join("")
+outcon.push(msg)
+newMsg = document.createElement('div');
+newMsg.innerHTML=msg
+newMsg.style.top = `${cMsgDown}px`
+newMsg.style.zIndex = "11"
+cMsgDown+=Math.ceil((msg.length/Math.ceil((window.innerWidth/settings.conSize)/16))+1)*18
+
+//newMsg.style.position = "fixed"
+
+lastThing.insertAdjacentElement('beforeend', newMsg);
+lastThing=newMsg
+}
+var gyro=systems.Gyroscope
+var prevDir=0
+var alarmPlayed = false
+var sky =document.getElementById("sky")
+sky.style.top=`${(-h)}px`; 
+sky.style.left=`${(-w)}px`; 
+var dd=false
+var GRID_SIZE = 32
+var repairButton = document.getElementById("repairButton")
+var amntSel = document.getElementById("amntSel")
+
+
+var store = [{des:"Plasma[FAAE]",amnt:359345,cost:3,cd:"fuel",catagory:"consumables"},{des:"Heavy_Armor",amnt:1,cost:750,cd:"hvyArmor",ref:"heavyArmor",upgrade:true,catagory:"upgrades"},{des:"Proton_Seeker",amnt:1,cost:500,cd:"heavyLaser",ref:"heavyLaser",upgrade:true,catagory:"upgrades"},{des:"Repairs",amnt:20034,cost:200,cd:"repair",catagory:"consumables"},{des:"RepairKits",amnt:276,cost:72,cd:"repairCharge",catagory:"services"},{des:"Vicerite_Armor",amnt:2,cost:650,cd:"martianArmor",ref:"martianArmor",upgrade:true,catagory:"upgrades"}]
+const easingAmount = 0.05; 
+
+
+const sysMenu = document.getElementById("sysMenu")
+const sysBox = document.getElementById("sysSelectBox")
+
+sysBox.style.left = `${(175)}px`; 
+sysBox.style.top = `${(0)}px`; 
+sysBox.hidden = true
+sysMenu.style.left = `${(0)}px`; 
+sysMenu.style.top = `${(0)}px`; 
+sysMenu.hidden = true
+const canvasCenterX = canvas.width / 2;
+const canvasCenterY = canvas.height / 2;
+fieldRadius=5000
+function updateMap() {
+if (submaptype==1.5){
+settings.minimap=true
+}else {settings.minimap=false}
+	mapctx.clearRect(0,0,map.width,map.height)
+	mapctx.save()
+	addx=0
+	addy=0
+if (settings.minimap){
+addx=drone.x
+addy=drone.y
+}
+
+	for (i2 in entities) {
+
+		c=entities[i2]
+mapctx.fillStyle="grey"
+if(c.type=="fighterDrone"){mapctx.fillStyle="red"}
+if(c.type=="station"){mapctx.fillStyle="orange"}
+fr=(player.mapSize/(map.width/2))
+
+if (c.type!=="bigMan"){
+
+mapctx.fillRect((((c.x+(fieldRadius)-c.w)+addx)/fr),(((c.y+(fieldRadius)-c.h)+addy)/fr) ,c.w/(fr/2),c.h/(fr/2))
+
+}
+
+	}
+	mapctx.fillStyle="white"
+	c=drone
+	if(settings.minimap){
+	mapctx.fillRect((map.width/2)-5,(map.height/2)-5,10,10)
+	}else{
+		mapctx.fillRect(((c.x+(fieldRadius)-c.w)/fr)+Math.sin(((trueTurn*-1)*(Math.PI/180))+Math.PI),(((c.y+(fieldRadius)-c.h)/fr)+Math.cos(((trueTurn*-1)*(Math.PI/180))+Math.PI)) ,(c.w*1.2)/(fr/2),(c.h*1.2)/(fr/2))
+		
+	mapctx.fillRect(((c.x+(fieldRadius)-c.w)/fr)+Math.sin((trueTurn*-1)*(Math.PI/180)),(((c.y+(fieldRadius)-c.h)/fr)+Math.cos((trueTurn*-1)*(Math.PI/180))) ,c.w/(fr/2),c.h/(fr/2))
+	}
+	mapctx.restore()
+
+}
+function radiansToDegrees(radians) {
+    return radians * 180 / Math.PI;
+}
+function movedir(x,y,dir,amnt) {
+return {x:(Math.sin((dir*-1) * Math.PI/180)*Math.round(amnt*100)/100),y:Math.cos((dir*-1) * Math.PI/180)}
+}
+function checkCircle(c1, c2) {
+     dist = Math.hypot(c1.x - c2.x, c1.y - c2.y)
+
+    minDist = (c1.r/2) + (c2.r/2)
+
+    return dist <= minDist
+}
+
+
+//make list of all the systems so we can.. do stuff with it man idk
+sysButtons=[]
+var lastPressed
+var partSelected
+for (i in systems) {
+newDiv = document.createElement('div')
+sysMenu.appendChild(newDiv)
+newButt = document.createElement('button');
+newDiv.appendChild(newButt)
+newButt.textContent=systems[i].des
+sysButtons.push(newButt)
+newText=document.createElement('body')
+newDiv.appendChild(newText)
+systems[i].menuStats=newText
+newButt.systemRef=i
+lastPressed=newButt
+partSelected=i
+
+newButt.style.backgroundColor = "lightgrey";
+
+newButt.addEventListener('click', (evnt) => {
+
+src=evnt.srcElement
+
+lastPressed.style.backgroundColor = "lightgrey";
+src.style.backgroundColor = "lightblue";
+lastPressed=src
+partSelected=systems[src.systemRef]
+console.log("WHAT"+partSelected)
+});
+
+}
+var mouseDir = 0
+var powerSwitch=document.getElementById("powerSwitch")
+var powerMeter = document.getElementById("powerMeter")
+
+var background=[]
+console.log(powerSwitch)
+    var mouseX = 0
+    var mouseY = 0
+document.addEventListener('mousemove', (event) => {
+    // Get the coordinates relative to the browser viewport
+     mouseX = event.x
+     mouseY = event.y
+	 mouseDir = (((Math.atan2(event.clientY - h/2, event.clientX - w/2) * 180 / Math.PI)+90)+trueTurn)
+	 })
+document.addEventListener('mousedown', (event) => {
+	 mouseX = event.x
+     mouseY = event.y
+	 mouseDir = (((Math.atan2(event.clientY - h/2, event.clientX - w/2) * 180 / Math.PI)+90)+trueTurn)
+if (player.rearCD==0){
+	player.rearCD=45
+
+if (event.target==canvas||event.button==0){
+	
+dir=mouseDir
+
+console.log(dir)
+fireLas(drone,3,10,dir,systems.laser.projType)
+}
+}
+})
+powerSwitch.addEventListener('click', (evnt) => {
+
+pushMsg("You toggle power to the "+ partSelected.des +".")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+console.log(partSelected)
+partSelected.on=!partSelected.on
+});
+var jettisonSwitch=document.getElementById("jettisonSwitch")
+jettisonSwitch.addEventListener('click', (evnt) => {
+if ( !partSelected.missing ) {
+console.log(partSelected)
+partSelected.missing=true
+pushMsg("You jettison the "+partSelected.des+" From the ship.")
+//shit it out
+entities.push({x:drone.x,y:drone.y,w:4,h:4,sprite:compSprite,dist:1,type:"jettisoned",sx:sx,sy:sy,t:0,r:0,ts:turnSpeed,mass:0.2})
+}else{pushMsg("It seems to be allready missing!")}
+})
+repairButton.addEventListener('click', (evnt) => {
+if(partSelected.missing){
+pushMsg("The part seems to be entirely missing from where it should be!")
+
+
+}else{
+if(partSelected.dam<10){
+if (partSelected.eff<30) {
+pushMsg("It seems in decent condition, however it seems the power is faulty..")
+} else{pushMsg("It doesent need repairs.")}
+
+
+}else{
+if(player.repairCharges>0&&!repairing){
+repairing=true
+reminder=partSelected
+
+setTimeout(()=>{
+partSelected=reminder
+repairing=false
+rng=random(10,50)
+partSelected.dam=Math.max(0,partSelected.dam-rng)
+player.repairCharges-=1
+pushMsg("Repaired "+rng+"Dmg ("+player.repairCharges+"/8)")
+},random(1000,2000))
+}else{pushMsg("You don't have anything to repair it with!")}
+}
+}
+})
+var entities = [{x:75,y:97,w:150,h:150,sprite:p3,dist:9,type:"Planet",sx:0,sy:0,t:0,r:64,grav:100,visible:true,mass:100000}]
+var station={x:0,y:0,w:128,h:128,sprite:stationSprite,dist:1,des:"Alpha Beta Station 78",type:"station",store:store,jobs:[{name:"Astroid Clearing",reward:32},{name:"Stinkmaster hiring"}],t:0,sx:0,sy:0,t:0,r:44,visible:true,mass:10000000,collisionPoints:[{x:45,y:0,r:34},{x:-45,y:0,r:34},{x:0,y:-45,r:34},{x:0,y:45,r:34}],fuel:100000}
+entities.push(station)
+
+const fighterDroneTemplate={x:0,y:0,w:22,h:22,sprite:fighterSprite,dist:1,type:"fighterDrone",t:0,sx:0,sy:0,t:0,r:12,visible:true,mass:2,health:100,targ:{x:0,y:0,t:0,thrust:0},tt:0,cool:0,locked:false,dieSpinDir:random(-1,1,0)}
+//job market 
+//jobs will depend on the place your in
+//#BigMoney$$$
+function flash(x,y) {
+entities.push({x:x,y:y,w:random(3,10),h:random(3,10),sprite:document.getElementById("flash"),dist:1.0000001,type:"debris",sx:0,sy:0,t:random(-180,180),r:64,grav:100,visible:true,mass:1,life:5,nocollide:true})
+}
+function regenJob(amnt,seed) {
+station.jobs = []
+for (let i4 = 0; i4 < amnt; i4++) {
+console.log(station.jobs)
+rng=Math.round(random(1,2))
+console.log(rng)
+if(rng==2){
+newJob={name:"Drone hunting",stat:"droneKills",target:player.droneKills+Math.round(genSV2(2,4,seed,i*35*Math.E)),reward:Math.round(genSV2(600,800,seed,i*32*Math.E))}
+}
+if(rng==1){
+newJob={name:"Astroid clearing",stat:"astroidKills",target:player.astroidKills+Math.round(genSV2(10,20,seed,i*37*Math.E)),reward:Math.round(genSV2(300,600,seed,i*31*Math.E))}
+}
+station.jobs.push(newJob)
+}
+}
+function evilExp(v) {
+return Math.exp(Math.abs(v))*Math.sign(v)
+}
+function hsvToRgb(h, s, v) {
+  s /= 100; v /= 100;
+  let i = Math.floor(h / 60), f = h / 60 - i,
+      p = v * (1 - s), q = v * (1 - f * s), t = v * (1 - (1 - f) * s),
+      r, g, b;
+  switch (i % 6) {
+    case 0: r = v, g = t, b = p; break;
+    case 1: r = q, g = v, b = p; break;
+    case 2: r = p, g = v, b = t; break;
+    case 3: r = p, g = q, b = v; break;
+    case 4: r = t, g = p, b = v; break;
+    case 5: r = v, g = p, b = q; break;
   }
-  return Math.floor(dividend / divisor);
-}
-function generateMap(seed,seed2,seed3) {
-sd = String(seed).split("") + String(seed2).split("") + String(seed3).split("")
-
-lv = 0
-slv = 0
-amnt = 0
-
-//ctx.fillStyle = "green"
-
-//ctx.fillRect(0,0,w,h)
-
-for ( i in sd) {
-
-amnt = amnt + 5
-
-
-
-
-
-ctx.fillRect(amnt%w,countOccurrences(amnt,w),5,5)
-//ctx.fillRect(bpx,bpy,sv5*5,sv5*5)
-
-
+  return `rgb(${Math.round(r * 255)}, ${Math.round(g * 255)}, ${Math.round(b * 255)})`;
 }
 
+
+if(settings.generateField) {
+regenField(5000,random(1000000,9999999))
+drone.x = station.x
+drone.y = station.y+ 100
 }
-//generateMap(random(10000000000000000,99999999999999999)*1000,random(10000000000000000,99999999999999999)*1000,random(10000000000000000,99999999999999999)*1000)
-           function output(msg) {
-                    var now = new Date();
-                    var h = now.getHours();
-                    var m = addZero(now.getMinutes());
-                    var s = addZero(now.getSeconds());
 
-                    if (h > 12)
-                        h -= 12;
-                    else if (h === 0)
-                        h = 12;
 
-                    function addZero(t) {
-                        if (t < 10)
-                            t = "0" + t;
-                        return t;
-                    };
+var orbSpeed=1000
+function regenField(fieldRadius,seed) {
+densePoints=[]
+worldType={orbit:(Math.floor(genSV2(1,9,seed,i*41))==3),sorted:(Math.floor(genSV2(1,9,seed,i*422))==4),dronefield:(Math.floor(genSV2(1,9,seed,i*413))==3)}
 
-                    message.innerHTML = message.innerHTML + String("<div>" +msg + "</div>")
+dPointsAmnt=Math.round(genSV2(1,5,seed,i*43))
+station.sx = 0 
+station.sy = 0
+station.x = 0
+station.y = 0
+//orbit
+minDist=100
+//decorating
+for (let i = 0; i < genSV2(1,30,seed,i*23); i++) {
+console.log("gahhh")
+decoNumber=Math.round(genSV2(0,decos.length,seed,i*34))
+if(Math.round(genSV2(0,5,seed,i*27))==1){decoNumber=3
+console.log("what the fack",decoNumber,newDeco=decos[decoNumber])
+}
+newDeco=decos[decoNumber]
+rDir=genSV2(-180,180,seed,i*92)*Math.PI/180
+
+randomT=genSV2(-180,180,seed,i*98)
+//dont question why this uses direction for size.
+sizeDir=genSV2(-Math.PI*2,Math.PI*2,seed,i*47)
+size=genSV2(newDeco.minSize,newDeco.maxSize,seed,i*11)
+
+rDist=(genSV2(minDist,fieldRadius,seed,i*102))
+rx=Math.sin(rDir)*(rDist*2)
+ry=Math.cos(rDir)*(rDist*2)
+sizeX=(size/2)+Math.sin(sizeDir)*size*100
+sizeY=(size/2)+Math.cos(sizeDir)*size*100
+if (!newDeco.odd){
+sizeX=size*100;sizeY=size*100;}
+
+
+
+sprite=newDeco.sprite
+//if (Math.round(genSV2(1,5,seed,i*34))>2){sizeX=size;sizeY=size;}
+background.unshift({x:rx,y:ry,w:sizeX,h:sizeY,sprite:sprite,dist:(10+hoff),type:"galaxy",hue:genSV2(-180,180,seed,i*45),sx:0,sy:0,t:randomT,r:size,visible:true,mass:size/10,health:size/1})
+}
+//swap to an object type for worldtype instead of an int, that way we can combine mutliple gentypes
+//orbit worldtype
+if (worldType.orbit) { 
+fieldRadius=15000
+minDist=10000
+rDist=genSV2(minDist,fieldRadius,seed,4*105)
+rDir=genSV2(-180,180,seed,i*92)*Math.PI/180
+station.x=Math.sin(rDir)*rDist
+station.y=Math.cos(rDir)*rDist
+drone.x = station.x
+drone.y = station.y+ 100
+entities.push({x:0,y:0,w:1000,h:1000,sprite:p4,dist:1,type:"bigMan",sx:0,sy:0,t:0,r:9000,grav:1000,mass:100000})
+}
+
+
+amnt=genSV2(100,200,seed,i*104)
+for (let i = 0; i < amnt; i++) {
+rng=random(0,1)
+if (rng==1){sprite=a3}
+if (rng==0){sprite=rock1}
+size=genSV2(32,160,seed,i*97)
+randomT=genSV2(-180,180,seed,i*96)
+
+
+rDist=genSV2(minDist,fieldRadius,seed,i*362)
+rDir=genSV2(-180,180,seed,i*82)*Math.PI/180
+if (worldType.sorted){
+rDir=Math.round(rDir*Math.PI)/Math.PI
+rDist=Math.round(rDist*100)/100
+console.log("Sorting...",rDir,rDist)
+}
+rx=Math.sin(rDir)*rDist
+ry=Math.cos(rDir)*rDist
+//"Sorted" worldtype
+
+nsx = 0
+nsy = 0
+//orbit speed applier
+if (worldType.orbit){
+rDir=rDir+Math.PI/2
+spd=genSV2(0.5,1.5,seed,i*1023)
+nsx=Math.sin(rDir)*1+spd
+nsy=Math.cos(rDir)*1+spd
+console.log(nsx,rDir,orbSpeed)
+}
+//check if elligable for moving to a dense spot
+
+
+entities.push({x:rx,y:ry,w:size,h:size,sprite:sprite,dist:1,type:"astroid",sx:nsx,sy:nsy,t:randomT,r:size,visible:true,mass:size/10,health:size/1})}
+//evil, fucked up place
+drones = Math.floor(genSV2(4,20,seed,i*81))
+if(worldType.dronefield){
+console.log("Im so sorry its over for you my boy..")
+drones = Math.floor(genSV2(20,40,seed,i*81))
+}
+
+for (let i = 0; i < drones; i++) {
+rDist=genSV2(minDist,fieldRadius,seed,i*22)
+rDir=genSV2(-180,180,seed,i*133)*Math.PI/180
+rx=Math.sin(rDir)*rDist
+ry=Math.cos(rDir)*rDist
+
+spawnDrone(rx,ry,Math.round(genSV2(0,4,seed,i*92)))
+
+}
+player.mapSize=fieldRadius
+regenJob(3,seed)
+}
+
+//add non-specific variables
+for (i6 in entities) {
+entities[i6].vFade=100
+}
+// this function puts a number through a very quik sinwave, even though its actually using cos, but im not going to call it a "Coswave" (that actualy sounds cool nvm) resulting in a seemingly random, yet predictable result.
+//"I can't beleive its not Math.random()!"
+function genSV(seed,off,agit) {
+// you dont NEED to set thease but i made it so you have the option to change the cosine rate and more importantly, the offset.
+if (!off){off=0}
+if (!agit){agit=1000000000}
+off=100+Math.E*Math.pow(off,2)-Math.sin(off)
+seed=100+Math.E*Math.pow(seed,2)-Math.cos(seed)
+if(settings.lazySV){
+//I can't belive it is Math.random()!"
+return(Math.random())
+}
+return Math.abs((Math.sin(seed+off)+Math.cos(seed+off))*off)%1
+}
+
+
+function genSV2(min,max,seed,off,agit) {
+if (!off){off=0}
+if (!agit){agit=1000000000}
+  return min+genSV(seed,off,agit) * (max-min-1)
+}
+function newExplosion(nx,ny,size,damage) {
+newBoom={x:nx,y:ny,w:64,h:64,sprite:explosionSprite,dist:1,type:"explosion",t:0,sx:0,sy:0,t:0,r:1,visible:false,dmg:damage,maxSize:32}
+entities.push(newBoom)
+return newBoom
+}
+var usedPositions = [{x:stg(w / 2 ),y:stg(h / 2)}]
+function getDist(x1,y1,x2,y2) {
+//console.log(x2,x1)
+    const deltaX = x2 - x1;
+    const deltaY = y2 - y1;
+
+    // Use the Pythagorean theorem: distance = sqrt((x2 - x1)^2 + (y2 - y1)^2)
+    const distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+
+    return distance;
+}
+document.addEventListener('mousemove', (event) => {
+  mouseX = event.clientX;
+  mouseY = event.clientY;
+  mx = event.clientX;
+  my = event.clientY;
+});
+function random(min, max,snap) {
+
+if (snap==undefined){
+snap=1
+}
+
+if (snap<0||snap==0){
+  return (Math.random() * ((max-1) - min + 1)) + min;
+}else{
+  min = Math.ceil(min*snap)/snap;
+  max = Math.floor(max*snap)/snap;
+  return (Math.floor((Math.random() * (max - min + 1))*snap)/snap) + min;
+  }
+}
+function pointAt(startX, startY, targetX, targetY,o) {
+if(!o){
+o=0
+}
+return Math.atan2(startX-targetX,startY-targetY)+o
+}
+function wrapAngle(angle) {
+    // Normalize the angle to the range [0, 360) first
+    let normalizedAngle = angle % 360;
+    if (normalizedAngle >= 180) {
+        normalizedAngle -= 360;
+    } else if (normalizedAngle < -180) {
+        normalizedAngle += 360;
+    }
+    return normalizedAngle;
+}
+function calcDist(x1,y1,x2,y2) {
+dx = x2 - x1
+dy = y2 - y1
+return Math.sqrt(dx * dx + dy * dy)
+}
+
+function smr32g() {
+return random(-1,1) * 32
+
+}
+var mouseInChat=false
+msgBox.addEventListener('mouseenter', (event) => {
+mouseInChat=true
+
+});
+
+// Function to handle the pointer leaving the element
+msgBox.addEventListener('mouseleave', (event) => {
+mouseInChat=false
+});
+function randSign() {
+return Math.sign(Math.random()-0.5)
+}
+function diff(a,b) {
+return(a-b)
+}
+function newRay(x, y, angle, range = 1500, fidelity = 2) {
+    let curX = x;
+    let curY = y;
+
+    for (let i = 0; i < range / fidelity; i++) {
+        curX += Math.sin(angle) * fidelity;
+        curY += Math.cos(angle) * fidelity;
+
+        // 1. Find the key for the current cell
+        let cellX = Math.floor(curX / CELL_SIZE);
+        let cellY = Math.floor(curY / CELL_SIZE);
+        let key = `${cellX},${cellY}`;
+
+        // 2. Only check entities in this specific cell
+        let bucket = spatialHash[key];
+        if (bucket) {
+            for (let ent of bucket) {
+                if (ent.noCollide) continue;
+                if (checkCircle({x: curX, y: curY, r: fidelity}, ent)&&ent.type!=="laser"&&ent.type!=="debris"&&ent.type!=="explosion") {
+
+					 
+                    return { hit: true, obj: ent, dist: i * fidelity};
                 }
-					            function clear(msg) {
-                   
-
-                    message.innerHTML = ""
-                }
-
-            // Perform your desired action here, e.g., submit a form, send a message
-
-	     document.addEventListener('keydown', function(event) {
-		  pressedKeys[event.code] = true;
-		  console.log(event.code);
-        if (event.key === 'Enter') {
-            handleCommand(input.value)
-				
-				}
-			         if (pressedKeys["KeyV"]) {
-            iframe.hidden = false
-				
-				}
-			 			         if (pressedKeys["KeyB"]) {
-            iframe.hidden = true
-				
-				}
-				})
-				 document.addEventListener('keyup', function(event) {
-		  pressedKeys[event.code] = false;
-
-				})
-
-function handleCommand(rawarg) {
-
-valid=false
-tv = false
-args = rawarg.toLowerCase().split(" ")
-arg = String(args[0])
-arg2 = String(args[1])
-arg3 = String(args[2])
-input.value = ""
-console.log(arg2)
-output(rawarg)
-if (arg=="") {
-
-}
-if (arg=="wait") {
-output("You wait")
-valid=true
-
-}
-console.log(rooms[player.cr])
-for (i in (rooms[player.cr].contents)) {
-curr = rooms[player.cr].contents[i]
-console.log(rooms[player.cr].contents[i].name,String(arg2))
-if (arg=="scan" && String(arg2).includes(String(rooms[player.cr].contents[i].name.toLowerCase()))) {
-output(curr.desc)
-valid=true
-}
-}
-if (arg=="scan" && arg2.includes("room")) {
-output("you tap in to something loosely connected to the host's eyes")
-output("You are in " + rooms[player.cr].desc)
-output("In the room, you see ")
-for (i in rooms[player.cr].contents) {
-output(String(rooms[player.cr].contents[i].name))
+            }
+        }
+    }
+    return { hit: false, obj: "none", dist: range };
 }
 
-valid=true
 
+function mr32g() {
+return {x:smr32g(),y:smr32g()}
 }
-if (arg=="scan" && arg2.includes("north")) {
-output("you tap in to something connected to the host's eyes")
-output("You look north, theres " + rooms[getRoom("north",player)].desc)
-//output("In the room, you see " + String(entities))
+function collideCheck(s1, s2) {
+//s1 should always be the player.
+px=s1.x 
+py=s1.y 
+ 
+  if (px > s2.x-s2.w/2 && px < (s2.x+s2.w/2) && py > s2.y-s2.h/2 && py < (s2.y+s2.h/2) ){
+		
+    
+	 // push the player back the targets width / 2
+    return true;
+  } else {
 
-valid=true
+  return false;
+}
+}
+ function keyU(event) {
+ if (event.keyCode){
+ kc = event.keyCode
+ }else{kc=event.code}
+ 
+ 		  if (kc == 17) {
+			CtrlDown=false
+		  }
+ if (kc == 68) {
 
-}
-if(arg=="clear") {
-clear()
-valid=true
-}
-if(arg=="host"&& arg2.includes("rel")) {
-output("You relinquish your control to the host")
-valid=true
-tv = true
-}
-if(arg=="host"&& arg2.includes("room")) {
-output("You ask the host what it knows or thinks about the room your in")
-valid=true
-tv = true
-}
-if(arg=="move" && arg2.includes("north")) {
-output("You move north..")
-if (rooms[player.cr].north == null) {
-output("You bump headfirst into a wall, the host mocks you")
+			dd=false
+			
+		  }
+		  		  if (kc == 65) {
+			//FEED HIM!!! DO IT FEED HIM NOW!!! FEED HIM!!!
+			ad=false
+			
+		  }
+		  		  		  if (kc == 87) {
+			//FEED HIM!!! DO IT FEED HIM NOW!!! FEED HIM!!!
+			wd=false
+			
+		  }
+		  		  		  		  if (kc == 83) {
+			//FEED HIM!!! DO IT FEED HIM NOW!!! FEED HIM!!!
+			sd=false
+			
+		  }
+		  		  		  		  if (kc == 81) {
+			//FEED HIM!!! DO IT FEED HIM NOW!!! FEED HIM!!!
+			qd=false
+			
+		  }
+		  	  		  		  if (kc == 69) {
+			//FEED HIM!!! DO IT FEED HIM NOW!!! FEED HIM!!!
+			ed=false
+			
+		  }
+		  	  		  	if (kc == 82) {
+
+			rd=false
+			
+		  }
+		  		  	  		  	if (kc == 79) {
+
+			pd=false
+			
+		  }
+		  		  	  		  	if (kc == 80) {
+
+			od=false
+			
+		  }
+		  		  		  		  		  		  if (kc == 90) {
+			
+			zd=false
+			
+		  }
+		  		  		  		  	  		  	if (kc == 86) {
+
+			bd=false
+			
+		  }
+		  		  	  		  	if (kc == 84) {
+
+			td=false
+			
+		  }
+		  		  	  		  		  if (kc == 32) {
+			//shoot da guh
+			
+			sbdown=false
+	
+			
+		  }
+ }
+scIn.addEventListener('blur', () => {player.typing=false})
+scIn.addEventListener('focus', () => {player.typing=true})
+mpid.addEventListener('blur', () => {player.typing=false})
+mpid.addEventListener('focus', () => {player.typing=true})
+    function keyD(event) {
+	 if(!interacted) {document.getElementById("logo").hidden=true;}
+		interacted=true
+		timeSinceLastInput=0
+        if (event.keyCode){
+ kc = event.keyCode
+ }else{kc=event.code}
+		  console.log(kc)
+		  		  	if (kc == 13) {
+
+			//enter in text field
+			if (!scIn.value==""){
+			inTerm(String(scIn.value))
+			scIn.value = ""
+			scIn.blur()
+			}else{scIn.blur()}
+			
+		  }
+		  if (kc == 17) {
+			CtrlDown=true
+		  }
+		  		  		  		  	
+		  if (!player.typing&&!CtrlDown) {
+			if(kc==66) {
+
+			drone.brakes=!drone.brakes
+			}
+		  		  	if (kc == 191) {
+			inTerm("undock")
+		  }
+		  if (kc == 84) {
+
+			
+			setTimeout(() => { 
+		typing=true
+			scIn.focus()
+			},1)
+		  }
+		  	if (kc == 86) {
+
+menuHolder.hidden = !menuHolder.hidden
+
+		  }
+		  }
+		  if (!settings.hardPaused&&!player.typing&&!CtrlDown) {
+		  		  	if (kc == 68) {
+
+			dd=true
+			
+		  }
+
+		  		  		  	if (kc == 67) {
+
+			settings.cameraChase=!settings.cameraChase
+			
+		  }
+		  	  		  	if (kc == 82) {
+
+			rd=true
+			
+		  }
+		  		  	  		  	if (kc == 76) {
+
+			settings.aimLaser=!settings.aimLaser
+			
+		  }
+		  		  		  	  		  	if (kc == 72) {
+
+			document.getElementById("logo").hidden=!document.getElementById("logo").hidden;
+			
+		  }
+		  		  		  	  		  	if (kc == 75) {
+
+			settings.lidar=!settings.lidar
+			settings.renderBackground=!settings.renderBackground
+			
+		  }
+		  		  		  	  		  	if (kc == 79) {
+
+			pd=true
+			
+		  }
+		  		  	  		  	if (kc == 80) {
+
+			od=true
+			
+		  }
+		  	if (kc == 77) {
+
+map.hidden = !map.hidden
+submaptype=(submaptype+0.5)%2
+updateMap()
+		  }
+
+		  		  
+		  	if (kc == 85) {
+//show the map
+
+stationUI.hidden = !stationUI.hidden
+if (settings.conSize==1) {
+settings.conSize=1.5
 } else {
-output("you finish moving north.")
-player.cr = rooms[player.cr].north
-//player.cr = player.cr = getRoom("north",player)
-}
-valid=true
-tv = true
-}
-if(arg=="move" && arg2.includes("south")) {
-output("You move south..")
-if (rooms[player.cr].south == null) {
-output("You bump headfirst into a wall, the host mocks you")
-} else {
-output("you finish moving south.")
-player.cr = rooms[player.cr].south
-}
-valid=true
-tv = true
-}
-if(arg=="host"&& arg2.includes("sei")) {
-output("You retake your control over the host")
-valid=true
-tv = true
-}
-if(arg=="host"&& arg2.includes("rep") || arg2.includes("opin")) {
-output("you ask your host what they think of you")
-output('"' + opinmsg[player.opin]+'"')
-valid=true
-tv = true
-}
-if(arg=="host"&& arg2.includes("status")) {
-output("you ask your host how they feel")
-valid=true
-tv = true
-}
-if(arg=="host"&& arg2.includes("thoughts")) {
-output("you ask your host if they have anything to say about this room")
-output('"' + rooms[player.cr].hostThoughts + '"')
-valid=true
-tv = true
+settings.conSize=1
 }
 
-if(tv) {
+adaptWindow()
+		  }
+		  		  		  	  		  	if (kc == 86) {
+
+			bd=true
+			
+		  }
+		  		  	  		  	if (kc == 84) {
+
+			td=true
+			
+		  }
+		  		
+		  		
+		  		  if (kc == 65) {
+			
+			ad=true
+			
+		  }
+		  		  		  if (kc == 81) {
+		
+			qd=true
+			
+		  }
+		  	  		  		  if (kc == 32) {
+			//shoot da guh
+			
+			sbdown=true
+	
+			
+		  }
+		  		  	  		  		  if (kc == 69) {
+			
+			ed=true
+			
+		  }
+		  		  	  		  		  if (kc == 192) {
+			
+			debug=!debug
+			debugIcon.hidden=!debug
+		  }
+
+		  		  		  		  if (kc == 87) {
+			
+			wd=true
+			
+		  }
+		  		  		  		  if (kc == 83) {
+			
+			sd=true
+			
+		  }
+		  		  		  		  		  if (kc == 83) {
+			
+			sd=true
+			
+		  }
+		  		  		  		  		  if (kc == 90) {
+		
+			zd=true
+			
+			pmode=!pmode
+		  }
+		  		  		  		  		  		  if (kc == 71&&player.upgrades.controlPanel.installed) {
+			
+			
+			
+			sysMenu.hidden=!sysMenu.hidden
+			sysBox.hidden=!sysBox.hidden
+		  }
+		 
+				
+}
+			
+		  //try using list like mathematical thingys to sort distances
+    }
+	 document.addEventListener('keydown',keyD)
+    document.addEventListener('keyup',keyU)
+	 pushMsg("This is the chatBox.")
+    
+	 
+var outcon=[]
+const CELL_SIZE = 100; // How big each grid square is
+let spatialHash = {};
+
+function updateSpatialHash() {
+    spatialHash = {}; // Clear every frame (for moving objects)
+    for (let ent of renderedEnts) {
+        // Find which cell the entity is in
+        let cellX = Math.floor(ent.x / CELL_SIZE);
+        let cellY = Math.floor(ent.y / CELL_SIZE);
+        let key = `${cellX},${cellY}`;
+
+        if (!spatialHash[key]) spatialHash[key] = [];
+        spatialHash[key].push(ent);
+    }
+}
+	 
+function tick() {
+updateSpatialHash()
+//loop if far away from map
+if (worldType.orbit){fieldRadius=15000}
+if (getDist(drone.x,drone.y,0,0)>fieldRadius+300) {
+oppose=pointAt(0,0,drone.x,drone.y)
+dist=getDist(drone.x,drone.y,0,0)
+
+drone.sx+= Math.sin(oppose)*0.05
+drone.sy+= Math.cos(oppose)*0.05
+
+}
+
+
+player.rearCD=Math.max(0,player.rearCD-1)
+player.fired=false
+sx=drone.sx
+sy=drone.sy
+drone.lx=drone.x
+drone.ly=drone.y
+
+if (player.cCon){player.controller=navigator.getGamepads()[0];
+	
+for (i in player.controller.buttons) {
+
+
+
+}
 
 }
 
 
 
+if (settings.canvReady) {
+
+datcon.send({con:outcon});
+}
+
+//Instead of skipping rendering, slow the game down.
+if (settings.slowLag){
+if (tickDelay>7){
+settings.gameSpeed=10+tickDelay/2
+}else{settings.gameSpeed+=(10-settings.gameSpeed)/10}
+}
+
+player.inCrisis=false
+if (gt%1000==10&&random(0,2)==1){sendDrone()}
+
+
+if (gt%20==9&&!map.hidden) {
+updateMap()
+
+}
+if (Math.floor(canvas.width)!=Math.floor(window.innerWidth/settings.conSize)||Math.floor(canvas.height)!==Math.floor(window.innerHeight)) {
+
+adaptWindow()
+}
+
+if (gt%100==9&&settings.notifEnabled) {
+//console.log(systems.laser)
+
+if(systems.laser.heat>systems.laser.maxHeat-30) {
+player.inCrisis=true
+
+console.log(laser)
+
+player.pendingWarnings.push("WARNING!! LASER TEMP AT: "+Math.round(laser.heat)+"C/"+laser.maxHeat+"C")
+}
+if (cockpit.dam>70||cockpit.eff<20&&cockpit.on||player.air <85){
+player.pendingWarnings.push("WARNING! LIFE SUPPORT EFFICENCY AT "+cockpit.eff+"%! ")
+player.inCrisis=true
+}
+if (player.inCrisis){
+pushMsg(player.pendingWarnings)
+}
+
+}
+player.pendingWarnings=[]
 
 
 
+ msgBox.style.opacity = 1-Math.max(1,timeSinceLastMsg/100)+1
+ player.dizzy = Math.max(player.dizzy-1,0)
+ 
+timeSinceLastInput+=1
+if(mouseInChat) {timeSinceLastMsg=Math.max(0,Math.min(timeSinceLastMsg-1,200))}else{timeSinceLastMsg+=1}
+settings.screenDarkness=player.air
 
- var deiframe = document.getElementById('iframe'); // Replace 'myIframe' with your iframe's ID
+ctx.filter = `brightness(${settings.screenDarkness}%)`
+sky.style.filter = `brightness(${settings.screenDarkness}%)`
+stationUI.style.filter = `brightness(${settings.screenDarkness}%)`
+skyX=drone.x/10+hoff
+skyY=drone.y/10+hoff
+
+//Math.cos(drone.t*Math.PI/180)*-getDist(drone.x/10+hoff,drone.y/10+hoff,0,0)
+if (settings.cameraChase){sky.style.transform = `rotate(${-trueTurn}deg)`;}else{
+skyX=-drone.x/10+hoff
+skyY=-drone.y/10+hoff
+sky.style.transform = `rotate(${0}deg)`
+
+}
+sky.style.backgroundPosition = `${skyX}px ${skyY}px`;
+
+//sky.style.width = String((w+h))+"px"
+//sky.style.height = String((h+w))+"px"
+//sky.style.left = String(-(w+h)/2)+"px"
+//sky.style.top = String(-(w+h)/2)+"px"
+sky.style.transformOrigin=`${w*1.5}px ${h*1.5}px`
+colliding=false
+ticksUntilBoom-=1
+player.hp=Math.min(player.hp+0.0005,100)
+if(youAreDie) {
+
+pushMsg("You died!")
+pushConMsg("VESSEL RESET COMPLETE.")
+pushConMsg("WELCOME, PREVIOUS PILOT HAS FLOWN FOR ["+Math.floor((Date.now()-player.living)/100000)+" Minutes] AND ["+Math.floor((Date.now()-player.living)/1000)+" Seconds]")
+pushConMsg("CAUSE OF DEATH: [Suffocation]")
+pushConMsg("WOULD YOU LIKE TO ERASE THIS DATA? (Y/N)")
+setTimeout(()=>{
+pushConMsg(">>y")
+pushConMsg("DATA ERASED.")
+},1000)
+player.living=Date.now()
+player.credits=Math.max(0,player.credits/3)
+youAreDie=false
+	drone.x=50
+drone.y=0
+drone.sx=0
+drone.sy=0
+sx=0
+sy=0
+fuel=100
+speed=0
+player.hp=100
+player.air=1//for that "fade in" effect (suffocation)
+drone.t=0
+turnSpeed=0
+trueTurn=0
+alarmPlayed=false
+
+for (i4 in systems) {
+curr=systems[i4]
+curr.dam=0
+curr.heat=20
+curr.eff=100
+curr.missing=false
+}
+}
+	
+//you cant aim, and i dont blame you.
 
 
 
+	
+//are we dying?
+dying=(ticksUntilBoom>0)
+totalVelocity= Math.abs(drone.sx+drone.sy)
+if (od) {zoom=Math.max(zoom*1.01,0.4)}
+if (pd) {zoom=Math.max(zoom*0.99,0.4)}
 
-console.log(valid)
-if (valid==false) {
-output("You're not sure how to do that..")
+zoom=Math.max(0,zoom)
+	 ctx.save()
+	 //shakeDir=random(-180,180)*Math.PI/180
+	 //shakeDist=random(-100,100)*speed
+	 shakeDir=0
+	 shakeDist=0
+	 
+
+
+				
+	 ctx.translate((w/2)+player.cameraThrowX+Math.sin(shakeDir)*shakeDist,(h/cOff)+player.cameraThrowY+Math.cos(shakeDir)*shakeDist)
+    ctx.scale(zoom,zoom)
+
+
+	 ctx.rotate(player.cameraThrow)
+	 player.cameraThrow-=player.cameraThrow/10
+	  player.cameraThrowX-=player.cameraThrowX/10
+	  player.cameraThrowY-=player.cameraThrowY/10
+	 if (settings.cameraChase){ctx.rotate((trueTurn*-1*Math.PI/180)+Math.PI)}
+	ox = drone.x - canvas.width / 2;
+    oy = drone.y - canvas.height / 2;
+seconds = Math.floor(gt/100)
+
+    
+	 tickStart=Date.now()
+    setTimeout(() => { 
+	 //are we docked to something right now?
+
+	 if (!settings.hardPaused&&!settings.paused) {
+	 	  if (tickDelay<7||(gt%tickDelay)==1||settings.slowLag){
+		  if(!settings.indClean){ctx.clearRect(-100000,-100000,w*1000,h*1000)}
+        
+		  }
+		  const newPosX = ((smoothX - (w / 2)) * -0.025)/zoom
+        const newPosY = ((smoothY - (h / 2)) * -0.04)/zoom
+        ctx.save()
+		  
+			
+		 	
+		  	osx=drone.sx
+			osy=drone.sy
+			
+
+//background rendering
+if (bkRendered){
+		 bctx.clearRect(0,0,w,h)
+if(settings.renderBackground){		 
+bctx.save()
+
+	 bctx.translate((w/2),(h/cOff))
+	  if (settings.cameraChase){bctx.rotate((trueTurn*-1*Math.PI/180)+Math.PI)}
+    bctx.scale(0.1,0.1)
+
+
+
+				 	for (i in background) {
+				bctx.save()
+				curr=background[i]
+			 bctx.translate(curr.x-(drone.x),curr.y-(drone.y))
+			 	 
+			 bctx.rotate(curr.t * Math.PI/180)
+			 
+			 	if(curr.hue){
+				
+				bctx.filter=`hue-rotate(${curr.hue}deg)`;
+				}
+				if(curr.type=="galaxy"){
+				bctx.filter=`hue-rotate(${curr.hue}deg) opacity(40%)`;
+				}
+				
+				bctx.drawImage(curr.sprite,-curr.w/2,-curr.h/2,curr.w,curr.h)
+				
+			 bctx.restore();
+				}
+				bctx.restore()
+}
+bkRendered=true
+}
+				
+		    for (i in entities) {
+            curr = entities[i]
+				curr.remove=false
+
+//shout out to my boy Con Peuter
+
+if (getDist(curr.x,curr.y,drone.x,drone.y)>1000){
+				curr.x+=curr.sx
+				curr.inRange=false
+				
+				curr.y+=curr.sy
+				//shitty orbit if far away enough
+				if (worldType.orbit){
+
+gravDir=pointAt(drone.x,drone.y,0,0)
+distance=getDist(drone.x,drone.y,0,0)
+
+
+
+if (distance<curr.r*2.5) {
+drone.sx+=(Math.sin(gravDir)*(1000)/(distance*-100))
+curr.sy+=(Math.cos(gravDir)*(1000)/(distance*-100))
+}
+
+				}
+				
+				} else {
+				curr.inRange=true
+				curr.ls=curr.x
+				curr.ls=curr.y
+				ctx.save()
+
+
+if (curr.type=="bigMan"){
+	curr.x=0
+	curr.y=0
+curr.t+=0.01
+//curr.sx=(Math.sin((curr.t/10) * Math.PI/-180))
+//curr.sy=(Math.cos((curr.t/10) * Math.PI/-180))
+
+gravDir=pointAt(drone.x,drone.y,curr.x,curr.y)
+distance=getDist(drone.x,drone.y,curr.x,curr.y)
+
+
+
+if (distance<curr.r*2.5) {
+drone.sx+=(Math.sin(gravDir)*(curr.grav)/(distance*-100))
+drone.sy+=(Math.cos(gravDir)*(curr.grav)/(distance*-100))
+}
+}
+//drone ai
+if (curr.type=="fighterDrone"){
+curr.cool-=1
+curr.targ.memory=Math.max(curr.targ.memory-1,0)
+if(curr.health<0){
+dCount=random(4,14)
+targDist=getDist(curr.targ.x,curr.targ.y,curr.x,curr.y)
+//have i reached an important spot?
+if (targDist<300) {
+curr.targ.important=false
+}
+curr.t+=curr.dieSpinDir*2
+curr.sx+=Math.sin(curr.t)*(curr.thrust)
+curr.sy+=Math.cos(curr.t)*(curr.thrust)
+if(random(1,4)==2){flash(curr.x,curr.y)}
+if(random(0,50)==10||drone.health<-30){
+	player.droneKills+=1
+	player.credits+=10
+	
+	newExplosion(curr.x,curr.y,random(8,122),5)
+	checkJobs()
+	debrisBoom(curr.x,curr.y)
+	curr.remove=true}
+
+}else{
+dist=getDist(curr.x+curr.sx,curr.y+curr.sy,drone.x+drone.sx,drone.y+drone.sy)
+arrivalTime=dist/10
+//12 th12 gu7 f1ghtabl3?
+if (curr.targ.memory>0||dist<3000&&avrgDamage>30) {
+//not that 1t I2NT imp0rtant but my brain is w31rd, so i g0tta s3t it 0ff.
+curr.targ.important=false
+curr.targ.x=drone.x+(((drone.sx)-curr.sx)*arrivalTime)
+curr.targ.y=drone.y+(((drone.sy)-curr.sy)*arrivalTime)
+curr.locked=true
+curr.targ.memory=200
+
+}else{curr.locked=false;}
+curr.strafing-=1
+if ((gt%1000)==500&&random(0,4)==3) {
+curr.strafing = random(400,600)//strafe for 400-600 ticks (~4-6 seconds)
+
+}
+adaptSpeed=9
+curr.targ.t = ((pointAt(curr.x,curr.y,curr.targ.x,curr.targ.y)+Math.PI))
+if (curr.strafing>0) {
+curr.targ.t = ((pointAt(curr.x,curr.y,curr.targ.x,curr.targ.y)+Math.PI))+Math.min(Math.max(getMovedir(curr.x,curr.y,curr.sx,curr.sy)/10,-1),1)
+adaptSpeed=15
+}
+
+diff=(curr.targ.t-curr.tt)
+
+while (diff < -Math.PI){diff +=Math.PI*2}
+while (diff > Math.PI) {diff -=Math.PI*2}
+
+
+
+curr.tt+=(diff/Math.exp(Math.abs(diff)))/adaptSpeed
+//y0uR d0n3 N0w BUD
+if(diff<0.0001||settings.sharpShooterDrones){curr.tt=curr.targ.t}
+speedDiff=getDist(drone.sx,drone.sy,curr.sx,curr.sy)
+
+curr.thrust=(0.02*Math.max(0.9,speedDiff))/Math.max(5+Math.abs(diff),1)
+
+if(diff<0.1&&random(0,25)==2&&curr.cool<0&&curr.locked&&!settings.freindlyDrones){
+
+ptype="normal"
+if (curr.subtype=="rocket"){
+ptype="seekerOrb"
+}
+fireLas(curr,random(-curr.acc,curr.acc,0),curr.dmg,curr.t,ptype);
+curr.cool=curr.fireCool
+
+}
+curr.sx+=Math.sin(curr.tt)*(curr.thrust)
+curr.sy+=Math.cos(curr.tt)*(curr.thrust)
+curr.t=curr.tt/-(Math.PI/180)
+if(!curr.locked&&random(0,100)==10&&(gt%10)==10&&!targ.important){
+curr.targ.x+=random(-100,100)
+curr.targ.y+=random(-100,100)
+}
+}}
+if (curr.type=="jettisoned") {
+curr.t+=curr.ts
+}
+if ( curr.type=="laser"){
+if (curr.lasType=="seekerOrb"&&curr.target){
+curr.t+=(Math.abs(curr.sx)+Math.abs(curr.sy))
+curr.sx/=1.01+(750-curr.life)/20000
+curr.sy/=1.01+(750-curr.life)/20000
+dir=pointAt(curr.x,curr.y,curr.target.x+curr.target.sx,curr.target.y+curr.target.sy)+(Math.PI)
+curr.sx+=Math.sin(dir)/11
+curr.sy+=Math.cos(dir)/11
+}
+if(settings.hivisLasers&&!curr.lastype=="seekerOrb"){
+
+curr.w = 1/Math.min(1,zoom)
+curr.h = 12/Math.min(1,zoom)
+}
+if (checkCircle(curr,drone)&&curr.parent!==drone){
+if (settings.lasersHurt){
+giveDamage(20,10)
+}
+curr.hit=true
+}
+curr.life-=1
+if(curr.lastype=="seekerOrb"&&curr.target){
+curr.life-=Math.min(Math.max(100-(curr.x,curr.y,curr.target.x+curr.target.sx,curr.target.y+curr.target.sy),0),100)*100
+console.log(curr.life)
+
+}
+if ( curr.life<0||curr.hit){
+	dCount=random(2,6)
+	flash(curr.x,curr.y)
+for (let i16 = 0; i16 < dCount; i16++) {
+randSize=curr.r/random(4,7,0)
+newMove={x:curr.x+random(-1,1,0),y:curr.y+random(-1,1,0)}
+randLife=random(10,30)
+entities.push({x:curr.x,y:curr.y,w:randSize,h:randSize,sprite:sprk1,dist:1,type:"debris",sx:(curr.sx/15)+random(-1,1,0),sy:(curr.sy/15)+random(-1,1,0),t:drone.t,r:randSize,ts:turnSpeed+random(-10,10,0),life:randLife,noCollide:true,mass:0.1})
+}
+curr.remove=true
+}
+}
+if (curr.type=="debris") {
+curr.t+=curr.ts
+curr.life-=1
+if (curr.sparky&&random(0,40)==10){flash(curr.x,curr.y)}
+if (curr.life<0) {curr.remove=true}
+}
+if (curr.type=="astroid"){
+curr.t+=0.01
+if(curr.health<0){
+dCount=random(4,14)
+player.astroidKills+=1
+checkJobs()
+for (let i16 = 0; i16 < dCount; i16++) {
+randSize=curr.r/random(4,7,0)
+newMove={x:curr.x+random(-1,1,0),y:curr.y+random(-1,1,0)}
+randLife=random(70,450)
+entities.push({x:curr.x,y:curr.y,w:randSize,h:randSize,sprite:document.getElementById("rGib"+String(random(1,2))),dist:1,type:"debris",sx:random(-1,1,0),sy:random(-1,1,0),t:drone.t,r:randSize,ts:turnSpeed+random(-10,10,0),life:randLife,noCollide:true,mass:0.1})
+}
+
+curr.remove=true
+
+}
+//curr.sx+=0.001
+}
+
+//for the sake of testing..
+//if((gt%250)==10) {newExplosion(100,20,10,10)}
+
+
+if (curr.type=="explosion"){
+curr.w=curr.w * 1.1
+curr.h=curr.h * 1.1
+curr.r=curr.r*1.1
+if (curr.r>curr.maxSize) {
+curr.remove=true
 }
 }
 
-let currentZoomLevel = 1.0; // Start at 100% zoom
-// player.r is used for rotation/pan X value
+if (curr.type=="freighter") {
+curr.sx=(Math.sin((curr.t) * Math.PI/-180))*2
+curr.sy=(Math.cos((curr.t) * Math.PI/-180))*2
 
-function tick() { 
+curr.t+=1
+}
+// collision check
+extMultiBall=false
+embSelect={x:0,y:0,r:0}
+
+
+if(debug){
+pushMsg("Rendered: "+String(renderedEnts.length)+"not Rendered: "+String(entities.length-renderedEnts.length))
+}
+lastDist=1000
+for (i0 in renderedEnts) {
+las=renderedEnts[i0]
+if(las!==curr){
+if (curr.lasType=="seekerOrb"){
+if (curr.parent.type=="fighterDrone"){
+curr.target=drone
+}else{
+if (las.type=="fighterDrone"){
+
+if (getDist(curr.x,curr.y,las.x,las.y)<lastDist){
+lastDist=getDist(curr.x,curr.y,las.x,las.y)
+curr.target=las
+}
+}
+}
+}
+if (!curr.type=="bigMan"&&las.type=="bigMan"&&curr!==las&&curr.type!=="fighterDrone"){
+	if(curr.type=="bigMan"){console.log("urafukindumass")}
+//curr.sx=(Math.sin((curr.t/10) * Math.PI/-180))
+//curr.sy=(Math.cos((curr.t/10) * Math.PI/-180))
+
+gravDir=pointAt(curr.x,curr.y,las.x,las.y)
+distance=getDist(curr.x,curr.y,las.x,las.y)
 
 
 
-iframe.contentWindow.postMessage({x:player.x,y:player.y,pressedKeys:pressedKeys,},"*")
-  requestAnimationFrame(tick); // Keep the correct animation frame loop
+if (distance<curr.r*2.5) {
+curr.sx+=(Math.sin(gravDir)*(las.grav)/(distance*-100))
+curr.sy+=(Math.cos(gravDir)*(las.grav)/(distance*-100))
+}
+}
+if (checkCircle(curr,las)&&curr.dist==1&&!curr.noCollide) {
+if(las.type=="laser"){
 
+
+if (curr.type=="astroid"||curr.type=="fighterDrone") {
+
+if(las.parent!==curr){
+las.hit=true
+curr.health-=random(10,25)
+curr.sx-=Math.sin(las.t*-Math.PI/180)*0.1/curr.mass
+curr.sy-=Math.cos(las.t*-Math.PI/180)*0.1/curr.mass
+
+}
+}
+}else{
+//console.log("Im fixing this shit frfr",las,curr)
+
+if(checkCircle(curr,las)&&las.dist==1&&!las.noCollide&&i0!==i&&settings.astroidsCollide){
+collisionFollowThrough(curr,las,{x:0,y:0,r:0})
+
+}
+
+//console.log("I fixed this shit fr",las,curr)
+}
+
+
+
+
+}
+}
+}
+if (curr.collisionPoints) {
+
+for (i6 in curr.collisionPoints) {
+colpoi=curr.collisionPoints[i6]
+
+if(checkCircle(drone, {x:curr.x+colpoi.x,y:curr.y+colpoi.y,r:colpoi.r})){
+
+extMultiBall=true;
+embSelect=colpoi;
+collisionFollowThrough(drone,curr,{x:curr.x+colpoi.x,y:curr.y+colpoi.y,r:colpoi.r},true,i6)
+
+
+}
+}
+}
+
+if(checkCircle(drone, curr)&&curr.dist==1&&!curr.noCollide){
+collisionFollowThrough(drone,curr,{x:0,y:0,r:0})
+}
+
+
+
+
+			 ctx.translate((curr.x-drone.x)/curr.dist,(curr.y-drone.y)/curr.dist)
+			 	if (settings.aimLaser&&false){
+				ctx.fillStyle="white"
+				arrivalTime=getDist(drone.x,drone.y,curr.x,curr.y)/10
+				ctx.fillRect(curr.x+(((curr.sx)-drone.sx)*arrivalTime),curr.y+(((curr.sy)-drone.sy)*arrivalTime),
+				5/zoom,5/zoom)
+				}
+			 ctx.rotate(curr.t * Math.PI/180)
+				//ctx.translate((curr.h/off),(curr.h/off))
+			 
+
+			 	if (curr.type=="explosion") {
+				ctx.fillStyle="orange"
+				ctx.lineWidth = 0
+				ctx.strokeStyle="Red"
+				cwi=(curr.w)
+				chi=(curr.h)
+				cxi=(curr.x-curr.w/2)
+				cyi=(curr.y-curr.h/2)
+				ctx.beginPath()
+				ctx.arc(random(-1,1), random(-1,1), curr.r/2, 0, 2 * Math.PI, false);
+				ctx.stroke()
+				ctx.fill()
+				ctx.closePath()
+				} else {
+				//this checks for.. something? i forgot what this is for.
+				if((getDist(curr.x,curr.y,drone.x,drone.y)/curr.dist+zoom)<1000-curr.r)
+						  if(debug&&curr.collisionPoints){
+						  
+						  for ( i7 in curr.collisionPoints) {
+			spoint=curr.collisionPoints[i7]
+				ctx.fillStyle="Red"
+				ctx.lineWidth = 1;
+				ctx.strokeStyle="Red"
+
+				ctx.beginPath()
+				ctx.arc(spoint.x, spoint.y, spoint.r/2, 0, 2 * Math.PI, false);
+				ctx.stroke()
+				ctx.fill()
+				ctx.closePath()
+				}
+			  }
+			  
+			 
+			  	renderEnt(curr)
+				}
+				
+				if(debug&&curr.dist==1){
+				ctx.fillStyle="Red"
+				ctx.lineWidth = 1;
+				ctx.strokeStyle="Red"
+				cwi=(curr.w)
+				chi=(curr.h)
+				cxi=curr.x-curr.w/2
+				cyi=curr.y-curr.h/2
+				ctx.beginPath()
+				ctx.arc(0, 0, curr.r/2, 0, 2 * Math.PI, false);
+				ctx.stroke()
+				ctx.fill()
+				ctx.closePath()
+				
+				//console.log((w/2)+(Math.sin((prevDir))))
+
+
+				
+
+				}	
+				
+if(colliding&&debug){
+ctx.fillStyle="blue"
+ctx.fillRect(-2,-2,4,4)
+}
+          curr.x+=curr.sx
+			 curr.y+=curr.sy
+			 if(curr.life){curr.life-=1}
+				ctx.restore()
+
+				//console.log(Math.round(curr.x + drone.x),Math.round(curr.y + drone.y))
+				
+}
+}
+ctx.restore()
+//REAPING TIME!!
+entities = entities.filter((ent) => !ent.remove);
+//get rendered ents, here is good because then we wont get ghosts, i hope.
+					renderedEnts=entities.filter((ent) => ent.inRange);
+
+
+
+	 		   
+
+
+
+			  ctx.restore()
+			  if(debug){
+			ctx.fillStyle="Green"
+ctx.fillRect((w/2)+(Math.sin((prevDir))*20)-5,(h/2)+(Math.cos((prevDir))*20)-5,10,10)
+			
+				ctx.fillStyle="Red"
+				ctx.lineWidth = 1;
+				ctx.strokeStyle="Red"
+
+				ctx.beginPath()
+				ctx.arc(w/2, h/2, drone.r, 0, 2 * Math.PI, false);
+				ctx.stroke()
+				ctx.fill()
+				ctx.closePath()
+			  }
+            ctx.save()
+        if (driving&&!repairing) {
+			keyPressed=false
+											//handle controller inputs
+				if (player.cCon) {
+					player.controller=navigator.getGamepads()[0]
+					
+					//deadzone thingy
+					gamepadsx=Math.max(player.controller.axes[0],-0.999)
+					pushMsg(gamepadsx)
+					altgsx=gamepadsx=(gamepadsx^2)*Math.sign(gamepadsx)
+					gamepadsy=player.controller.axes[1]
+					gamepadlx=player.controller.axes[2]
+					gamepadly=player.controller.axes[3]
+					gamepadThrottle=Math.max(gamepadly*-1,player.controller.buttons[7].value)-Math.max(gamepadly,player.controller.buttons[6].value)
+					gamepadZoom=player.controller.buttons[12].value-player.controller.buttons[13].value
+
+					zoom=Math.max(zoom*(1+gamepadZoom*0.01),0.4)
+					commandedSpeed=commandedSpeed+(player.speed*gamepadThrottle)
+					if (Math.abs(gamepadThrottle)>0.1) {keyPressed=true}
+					if (Math.abs(gamepadsx)>0.1){ turnSpeed+=(gamepadsx*(0.02+Math.abs(speed/2)))*(gyro.eff/100);keyPressed=true}
+					if (Math.abs(gamepadlx)>0.1){strafeSpeed-=gamepadlx*(systems.sideThrust.eff/16000);keyPressed=true}
+					
+				}
+		  if (dd) {
+			keyPressed=true
+		               							if(pmode){
+							drone.sx+=0.001
+							}else{
+         turnSpeed+= (0.025+Math.abs(speed*2))*(gyro.eff/100)
+				}
+				}
+				if (qd) { strafeSpeed+=systems.sideThrust.eff/10000;keyPressed=true}
+				if (ed) { strafeSpeed-=systems.sideThrust.eff/10000;keyPressed=true}
+				
+				//handle strafing speeds or something idk man
+
+
+
+				drone.sx=drone.sx+(Math.sin(((trueTurn*-1)+90) * Math.PI/180))*strafeSpeed
+            drone.sy=drone.sy+(Math.cos(((trueTurn*-1)+90) * Math.PI/180))*strafeSpeed
+								
+				
+								
+
+					   if (ad) {
+						keyPressed=true
+						             							if(pmode){
+							drone.sx-=0.001
+							}else{
+             turnSpeed -= (0.025+Math.abs(speed*2))*(gyro.eff/100)
+				 }
+				}
+//					  if (zd) {
+//		hoff+=0.1
+//					  }
+				 		   if (wd) { commandedSpeed=commandedSpeed+player.speed;keyPressed=true }
+
+          
+			  
+				
+							if (sd) {commandedSpeed=commandedSpeed-player.speed;keyPressed=true}
+
+           
+			  
+				
+				if(rd) {
+				//brakes, (slow the FUCK DOWN WE'RE GONNA CRASH!!!!!!!)
+ speed=speed/1.0005
+
+
+ //dir+awaydir/2 -- just curious what something like that would do, try something like that later.
+ sx=sx/1.01
+sy=sy/1.01
+turnSpeed=turnSpeed/(1+(0.1*(gyro.eff/100)))
+
+				} 
+
+//actual brakes, dont question what the one above me was.
+if (drone.brakes&&!keyPressed){
+	drone.sx=drone.sx/1.03
+	drone.sy=drone.sy/1.03
+}
+				
+				  strafeSpeed=strafeSpeed/1000
+				shipSystems()
+				 heat+= Math.abs(speed*1000)
+				 heat=(heat/1.01)-0.1
+				 heat=Math.min(Math.max(1,heat),50)
+				 turnSpeed=(turnSpeed)/(1+(0.02*(gyro.eff/100)))
+			 	 speed=speed/1.1
+				 commandedSpeed=commandedSpeed/1.1
+				 trueTurn = wrapAngle(drone.t)
+drone.sx=drone.sx+ (Math.sin((trueTurn*-1) * Math.PI/180)*(speed)/1)
+drone.sy=drone.sy+  (Math.cos((trueTurn*-1) * Math.PI/180)*(speed)/1)
+}
+drone.t += turnSpeed
+
+drone.x += drone.sx
+drone.y += drone.sy
+
+				
+				//offsets=movedir(0,0,trueTurn,speed*100) 
+offsets=[0,0]
+				//console.log(offsets)
+				ctx.translate((w/2-offsets[0])+player.cameraThrowX, (h/cOff-offsets[1])+player.cameraThrowY);
+		
+    ctx.scale(zoom/10,zoom/10)
+	 if (settings.cameraChase){ctx.rotate(Math.PI)} else {ctx.rotate(trueTurn* (Math.PI/180))}
+
+
+    
+    
+
+				
+				
+				offX=random(-(speed*1000),(speed*1000))/10
+				offY=random(-(speed*1000),(speed*1000))/10
+				sizeoff2=random(-1*(speed*1000)/8,1*(speed*1000)/8)
+				
+				if(speed<0.001) {
+				timg=t1
+				}
+				if(speed>0.001) {
+				timg=t2
+				}
+				if(speed>0.002) {
+				timg=t3
+				}
+				if(speed>0.004) {
+				timg=t4
+				}
+
+					//gah = 90-(Math.sin(gt/10))*-10
+					gah = 50+Math.abs(heat)+Math.sin(gt/10)
+				oldfilt = ctx.filter
+				ctx.filter = `brightness(${(gah/2)+(settings.screenDarkness)}%)`
+				//oldstyle: ctx.drawImage(timg,-14+sizeoff2,-48-((speed*2000)+sizeoff),28,24+(speed*2000)+sizeoff)
+				if (systems.thruster.eff!==0) {
+				ctx.drawImage(timg,-18+offX,-46+offY,36,24)
+				}
+				ctx.filter = oldfilt
+				if (settings.aimLaser) {
+oldFilt=ctx.filter
+
+ctx.filter=`opacity(${30+Math.sin(gt/70)*10}%)`
+ctx.fillStyle="white"
+size=settings.lineSize/zoom
+ctx.fillRect(-size/2,0,size,((w+h)*10)/zoom)
+
+ctx.filter = oldFilt
+}
+				ctx.drawImage(dronesprite,-64,-64,128,128)
+				//draw FOV cone.
+							if (settings.drawFOV) {
+				oldFilt=ctx.filter
+				ctx.filter=`opacity(${70}%)`
+				ctx.save()
+			   ctx.globalCompositeOperation = 'destination-out'
+				//calc light falloff
+				//for (let i10 = 0; i10 < settings.lightFalloff; i10++) {
+				
+					ctx.beginPath();
+				ctx.lineWidth=(w*h)/5.0400 
+				visArcSize=4
+				//left arc
+				ctx.arc(0,0,(w*h)/10,0,Math.PI*2)
+				
+				ctx.stroke()
+				ctx.closePath();
+				//s}
+				ctx.restore();
+				}
+				
+					
+				ctx.restore();
+				//funkytime
+				//Backround visuals
+				
+
+		
+//add induvisual systems control--done!--why do i still have this i did it allready a while ago..
+			gt+=1
+			//console.log(speedDiff)
+			//making sure the cooldown is reset
+			if (colliding){
+			collided=true
+			}else{
+			collided=false
+			}
+			
+			speedDiff=Math.abs((drone.sx-osx)+(drone.sy-osy))
+			}
+			tickDelay=Math.abs((Date.now()-tickStart)-settings.gameSpeed)
+
+
+			if(!heartstop){
+			
+			if(settings.canvReady){
+			
+			
+			}
+			//reset outcon
+			outcon.splice(0,outcon.length)
+			if (settings.showTD){pushMsg(tickDelay)}
+        tick()
+		  }
+    }, settings.gameSpeed);
+	 if(settings.lidar&&(gt%10)==0){
+checkLidar()
+}
+}
+ function stg(thing) {
+return Math.round(thing / 32) * 32
+ }
+
+//TODO:
+//add power system, (engine generates power) and different systems will use it.--also done.
+
+ function shipSystems() {
  
 
+ engine=systems.engine
+ fthrust=systems.thruster
+ sthrust=systems.sideThrust
+ cooler=systems.cooling
+ gyro=systems.gyroscope
+fuelTank=systems.tank
+computer=systems.shipComputer
+laser=systems.laser
+armor=systems.armor
+cockpit=systems.cockpit
+engine.eff=Math.max(100-engine.dam,0)
+laser.cd-=1
+ cpsg=0
+ conStatic.style.opacity=Math.min(computer.dam/400,0.7)
+ //how's our engine doing?
+if(cockpit.dam>100||cockpit.missing) {
+
 
 }
-// Start the loop once
-requestAnimationFrame(tick);
+if(armor.types[armor.typeUsed]==upgradeDatabase.martianArmor) {
+armor.dam= Math.max(armor.dam-0.01,0)
+}
+fakeSbDown=(sbdown)
+if(player.cCon){fakeSbDown=(sbdown|| player.controller.buttons[0].value>0)}
+
+if(fakeSbDown&&laser.cd<0&&laser.eff>20){
+laser.cd=laser.settings[0].val
+player.fired=true
+acc=random(-(1-laser.settings[0].val/150)*3,(1-laser.settings[0].val/150)*3,0)
+
+acc2=acc*Math.PI/180
+fireLas(drone,acc,30,trueTurn,systems.laser.projType)
+}
+player.air-=0.02+cockpit.dam/1000
+player.air += 2/(101-systems.cockpit.eff)
+player.air=Math.min(100,player.air)
+if(player.air<0) {player.hp-=0.1}//holy shit i cant breathe eughguhehuehgeghegheuhuehguhegheghegheugheh
 
 
+
+if(player.hp<0) {
+//holy shit i'm dead
+youAreDie=true
+}
+engine.heat+=0.1+(Math.abs(commandedSpeed/100)*engine.eff)*10
+fthrust.heat+=0.1+(Math.abs(commandedSpeed/100)*engine.eff)*10
+engine.pwrUsg=-1*Math.abs(250/100)*engine.eff
+speed=(commandedSpeed/100)*fthrust.eff
+
+
+ //cooler can do its thing., if it isnt on, make it cool much slower.
+avrgHeat=20
+heatProbe=[]
+overallHealth=[]
+for (i3 in systems) {
+ heatProbe.push(systems[i3].heat)
+ overallHealth.push(Math.max(systems[i3].dam,100))
+}
+  
+  avrgHeat=1*Math.abs(heatProbe.reduce((a, b) => a + b, 0)/heatProbe.length)
+  avrgDamage=1*Math.abs(overallHealth.reduce((a, b) => a + b, 0)/overallHealth.length)
+  //time to check every single damn system on this wreched ship..
+ for (i2 in systems) {
+ 
+curr=systems[i2]
+//remove when you add dying from things like the fueltanks exploding
+
+
+//is this even IN the ship??
+
+if (!curr.missing) {
+//ok it is
+//make sure all of the ones that are 
+
+
+curr.dam=Math.min(Math.max(curr.dam,0),100)
+
+
+if (curr.on){
+
+effDam=(((Math.max(curr.dam,30)-30)/70)*100)
+if(gt==10000){console.log(effDam)}
+curr.eff=Math.max(((100-effDam)/100)*(power/10),0);
+cpsg+=curr.pwrUsg*(curr.eff/1)
+}else{curr.eff=0}
+
+if(curr==fthrust){
+curr.pwrUsg=curr.baseUsg+Math.abs(speed*1000)
+}
+if(curr==gyro){
+curr.pwrUsg=curr.baseUsg+Math.abs(turnSpeed*10)
+}
+if(curr.heat>curr.maxHeat) {
+curr.dam +=0.1
+
+}
+if(curr==laser) {
+if(player.fired){
+laser.heat+=9
+
+}
+}
+
+
+
+
+
+
+fuel-=0.0001+(fuelTank.dam*0.0001)
+//main eff calc
+
+
+
+
+ if (computer.eff!==0) {
+ systems[i2].menuStats.innerText= String(Math.floor(systems[i2].heat))+"C; Eff: "+ String(Math.floor(systems[i2].eff))+"%; "+"enabled: "+String(systems[i2].on)+" Cnd: "+Math.round(100-curr.dam)+"%"
+ } else {if (curr!=cockpit){
+  systems[i2].menuStats.innerText= String(Math.floor(random(100,999))+"C; Eff: "+ String(random(100,999))+"%; "+"enabled: "+String("????"))
+ }}
+ //special sysStat texts
+ //engine meltdown
+ if(curr==engine&&curr.heat>curr.maxHeat&&!systems.engine.missing){systems[i2].menuStats.innerText="[!Meltdown!] "+systems[i2].menuStats.innerText
+ //Chat it burns horrificly.
+engine.heat+=1
+
+ 
+ }
+ //gastank explosion
+if(curr==fuelTank&&curr.heat>curr.maxHeat&&curr.dam>60&&!systems.tank.missing){systems[i2].menuStats.innerText="[!Critical!] "+systems[i2].menuStats.innerText
+giveDamage(100)
+pushMsg("Something blew up in the back of the ship..")
+systems.tank.missing = true
+}
+ 
+ curr.heat-=(curr.heat-avrgHeat)/500
+ curr.heat-=(curr.heat-0)/5000
+  if (cooler.on) {
+  //check if the cooler is badly damaged, but not completely.
+  if ( cooler.dam>80&&cooler.dam<0) {systems[i2].heat-=1} else {
+systems[i2].heat+=((20-curr.heat)/1000)*(cooler.eff/100)
+
+}
+} else {
+systems[i2].heat+=(20-systems[i2].heat)/10000
+
+}
+
+//console.log(systems[i].heat)
+
+} else {curr.eff=0; curr.menuStats.innerText= String("Missing!")}
+ }
+power=Math.max(Math.min((power-((cpsg/1000))),1000),0)
+ 
+//systems[i2].gyroscope
+
+powerMeter.innerText=String(Math.round(power/10))+"%; "+String(Math.round(-cpsg))+"W;" +"Air:"+String(Math.round(player.air))+" HP:"+String(Math.round(player.hp))+";"
+
+//Condition: "+String(Math.round(100-partSelected.dam))+"%"
+ }
+ // move collision handling its own function thingy
+
+
+ function collisionFollowThrough(victim,curr,embSelect,extMultiBall,selectedBall) {
+ if (victim.mass>curr.mass) {
+ temp=curr
+ curr=victim
+ victim=temp
+ //the ol' switcheroo
+ }
+ if(!embSelect){embSelect={x:0,y:0,r:0}}
+if (curr.type=="explosion"){
+//oh thats a bomb..
+embSelect={x:0,y:0,r:0}
+giveDamage(curr.dmg,3)
+aDir=pointAt(curr.x,curr.y,victim.x,victim.y)+Math.PI*-1
+newMss=movedir(0,0,aDir,1)
+//console.log(movedir(0,0,aDir,1))
+victim.sx+=newMss.x/30
+victim.sy+=newMss.y/30
+curr.remove=true
+//drone.x=curr.x+(Math.sin((aDir)))*(curr.r/2)
+//drone.y=curr.y+(Math.cos((aDir)))*(curr.r/2)
+} else {
+if(victim.type=="bigMan"||curr.type=="bigMan"){console.log("urafukindumass")}
+colliding=true
+calX=curr.x
+calY=curr.y
+calR=((curr.r/2)+(victim.r/2))
+if (extMultiBall){
+calX=embSelect.x
+calY=embSelect.y
+calR=((embSelect.r/2)+(victim.r/2))
+}
+
+calObj={x:curr.x,y:curr.y,r:((curr.r/2)+(victim.r/2))}
+
+
+aDir=pointAt(calX,calY,victim.x,victim.y)+Math.PI*-1
+rDir=pointAt(calX,calY,victim.x,victim.y)
+prevDir=aDir
+// do you know how fast you were going back there?
+relativeSpeed = getDist(curr.sx,curr.sy,victim.sx,victim.sy)*2
+realRelativeSpeed = getDist(curr.sx,curr.sy,victim.sx,victim.sy)
+
+
+
+if(realRelativeSpeed>0.2&&!collided){
+if (victim==drone){
+giveDamage(relativeSpeed*10,Math.ceil(relativeSpeed))
+}else{if(victim.type=="fighterDrone"||victim.type=="astroid"){
+victim.health-=relativeSpeed*10,Math.ceil(relativeSpeed)
+
+}}
+
+
+
+}
+collided=true
+
+victim.x=calX+(Math.sin((aDir)))*calR
+victim.y=calY+(Math.cos((aDir)))*calR
+
+
+//-drone.r/4
+combinedMass=(victim.mass+curr.mass) //calibrated for the velocity transfer calculations
+victim.sx-=(victim.sx-curr.sx)/100/combinedMass*(curr.mass*2)*relativeSpeed
+victim.sy-=(victim.sy-curr.sy)/100/combinedMass*(curr.mass*2)*relativeSpeed
+//was 25 so make the drone mass amount to 2.5
+//the fuck you mean 'my turn'?
+curr.sx-=(curr.sx-victim.sx)/100/combinedMass*(victim.mass*2)*relativeSpeed
+curr.sy-=(curr.sy-victim.sy)/100/combinedMass*(victim.mass*2)*relativeSpeed
+
+//sx=+((Math.sin((aDir)))*relativeSpeed)/1000
+//sy=+((Math.cos((aDir)))*relativeSpeed)/1000
+
+//+(Math.cos((aDir)))*(curr.r/2))/25
+//add the turn into this please or else itll be occasionally wrong
+turnDisruption=+(((Math.sin(aDir)-0.5)*2)+((Math.cos(aDir)-0.5)*-2))/10
+//console.log(turnDisruption)
+//turnSpeed+=turnDisruption
+//console.log(aDir,sx)
+
+cDir=pointAt(curr.x,curr.y,victim.x,victim.y)
+
+//docking
+player.dCool = Math.max(player.dCool-1,0)
+if (selectedBall==3&&curr.type=="station"&&extMultiBall&&player.dCool==0) {
+drone.sx = curr.sx
+drone.sy = curr.sy
+settings.hardPaused=true
+player.docked=true
+stationUI.hidden=false
+scIn.focus()
+player.dockedStation=curr
+pushConMsg("INIT_DOCKING_MINIPUTT")
+pushConMsg("DOCKING TO "+curr.des)
+pushConMsg("WELCOME, PILOT. PLEASE TYPE 'help' IN THE CONSOLE FOR ASSISTANCE")
+
+}
+}
+ }
+function renderEnt(curr) {
+//handle lagging by skipping rendering
+//yes, it uses abs twice, please shut up.
+let dx = Math.abs(Math.abs((curr.x - drone.x))+10)
+let dy = Math.abs(Math.abs((curr.y - drone.y))+10)
+//("Highest screen axes size")
+//this is done simply to just make it not dissapear early
+hsas=Math.max(w,h)
+// 2. Check if the scaled distance exceeds half the screen dimensions
+if (curr.type == "bigMan" || (settings.runOutOfView && (
+    (dx * zoom) < ((hsas / 2)) + ((curr.r*curr.dist)* zoom) || 
+    (dy * zoom) < ((hsas / 2)) + ((curr.r*curr.dist) * zoom)
+))) {
+if (tickDelay<7||(gt%tickDelay)==1||settings.slowLag){
+if (getDist(drone.x,drone.y,curr.x,curr.y)<(zoom/10)||curr.type=="bigMan") {
+				curr.vFade=Math.max(0,curr.vFade-0.05)
+				
+
+			
+				}else {curr.vFade=Math.min(1,curr.vFade+0.01)}
+				if (curr.vFade<1||!settings.drawFOV||curr.type=="bigMan"){
+									oldfilt = ctx.filter
+				if ( settings.drawFOV){ctx.filter = `opacity(${100-curr.vFade*100}%)`}
+				if(settings.indClean){
+				orig=ctx.globalCompositeOperation
+				ctx.globalCompositeOperation = 'destination-out';
+				ctx.save()
+				ctx.translate(((curr.lx+drone.x)-curr.x),curr.ly-(curr.ly+drone.y))
+				pushConMsg(curr.lx-curr.x)
+				ctx.drawImage(curr.sprite,-curr.w/2,-curr.h/2,curr.w,curr.h)
+				ctx.restore()
+				ctx.globalCompositeOperation=orig
+				}
+				if(curr.hue){
+				
+				ctx.filter=`hue-rotate(${curr.hue}deg);`;
+				}
+				if(curr.type=="galaxy"){
+				ctx.filter=ctx.filter+`opacity(${40+(Math.sin(gt/10)*10)+curr.hue}%)`
+				}
+				ctx.drawImage(curr.sprite,-curr.w/2,-curr.h/2,curr.w,curr.h)
+
+				ctx.filter=oldfilt
+				}
+				}
+				}
+}
+MData={keys:[{code:68,pressed:false}]}
+
+//data to send
+peer.on('connection', function(dataConnection) {
+	console.log("Connected to",dataConnection)
+	
+	datcon=dataConnection
+	settings.canvReady=true
+	
+		dataConnection.on('data', function(data) {
+		//handle incoming data from co-pilot
+		MData=data
+		
+		if(String(MData.con)) {
+		console.log(MData.con)
+		pushConMsg("COPLT:")
+		
+		inTerm(String(MData.con.toLowerCase()))
+		}
+		//re-enable in a bit
+//		for (i in MData.keys){
+		
+//		if(MData.keys[i].pressed){
+		
+//keyD(MData.keys[i])
+//		}else{keyU(MData.keys[i])}
+		
+		//}
+		
+		
+//console.log("OH god i have to actualy do my job", data)
+});
+});
+//co-pilot tick
+var DTS={keys:[{code:68,pressed:false}]}
+function mpClientTick() {
+
+var lastDTS=DTS
+
+DTS={keys:[{code:68,pressed:dd},{code:65,pressed:ad},{code:87,pressed:wd},{code:83,pressed:sd},{code:81,pressed:qd},{code:69,pressed:ed},{code:32,pressed:sbdown}],con:con}
+mismatch=false
+
+
+
+
+if(mpcReady){
+mp.send(DTS);
+
+if (con!==""){
+con=''
+}
+}
+setTimeout(()=>{
+
+mpClientTick()
+},10)
+}
+
+
+function fireLas(parent,acc,dmg,dir,type){
+turn = parent.t
+if(!type){type="basic"}
+
+if (parent.tt){turn=parent.tt}
+if (dir){turn=dir}
+pwidth=1
+bulletSpeed=10
+life=145
+sprite=laserSprite
+if (type=="fatfuck"){bulletSpeed=1;dmg+=20;pw=16;console.log("FATFUCK DETECTED!!",type);}
+if (type=="seekerOrb"){dmg+=35;life=500;bulletSpeed=2;pwidth=12;dmg+=30;pw=16;console.log("MISSILE",type);sprite=sprk1}
+
+
+
+			newLas={x:parent.x,y:parent.y,w:pwidth,h:12,noCollide:true,sprite:sprite,dist:1,type:"laser",t:turn-180+acc,sx:parent.sx+Math.sin(((acc+turn)*-Math.PI/180))*bulletSpeed,sy:parent.sy+Math.cos(((acc+turn)*-Math.PI/180))*bulletSpeed,r:10,visible:true,mass:2,dmg:dmg,life:life,hit:false,parent:parent,lasType:type}
+
+		
+			return entities.push(newLas)}
+
+function checkLidar(){
+lctx.clearRect(0,0,1000,1000)
+const angleStep = 0.5;
+const totalFOV = settings.rayCount * angleStep; // e.g., 36 rays * 2.5 = 90 degrees
+const startAngleOffset = totalFOV / 2; // To center the spread
+
+for (let i12 = 0; i12 < settings.rayCount; i12++) {
+    // 3. Fix Angle: Start at (trueTurn - half FOV) and increment
+    // Note: We use (i12 + 0.5) to sample the center of each "sector"
+    let currentAngleDegrees = (trueTurn - startAngleOffset) + (i12 * angleStep);
+    let rayAngle = -currentAngleDegrees * (Math.PI / 180);
+    
+    let ray = newRay(drone.x, drone.y, rayAngle);
+
+    // 4. Fix Color: Use Math.max to prevent negative brightness values
+    let brightness = Math.max(0, 50 - (ray.dist / 15));
+	 if (ray.hit){brightness=Math.max(10,brightness)}
+	 hue=0
+	 sat=0
+	 if (ray.obj&&ray.obj.type=="fighterDrone"){sat=100;}
+if (ray.obj&&ray.obj.type=="laser"){sat=100;hue=20;}
+    lctx.fillStyle = hsvToRgb(hue,sat, brightness);
+
+    // 5. Fix Position: Calculate X and Width to fill the canvas exactly
+    let barWidth = (lidar.width) / settings.rayCount;
+    let xPos = i12 * barWidth;
+    
+    // We add a tiny +1 to barWidth to prevent "seams" between bars
+    lctx.fillRect(xPos, 0, barWidth + 1, 10);
+}
+lctx.fillStyle="white"
+lctx.fillRect(lidar.width/2,0,1,5)
+}
+
+//are we done yet??
+function checkJobs() {
+if (player.jobs.length>0){
+for (i in player.jobs) {
+c=player.jobs[i]
+if (c.target<player[c.stat]){
+player.credits+=c.reward
+pushMsg("Job complete!")
+player.jobs.splice(i,1)
+}
+
+
+
+}
+}
+}
+function giveUpgrade(upgrade) {
+targetSys=systems[upgrade.c]
+targetSys.types.push(upgrade)
+}
+adaptWindow()
+tick(); 
 </script>
+
+</body>
+</head>
+</html>
